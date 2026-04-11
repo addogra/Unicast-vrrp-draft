@@ -1,0 +1,672 @@
+
+
+
+
+Network Working Group                                           A. Dogra
+Internet-Draft                                                A. Abraham
+Intended status: Informational                             Cisco Systems
+Expires: 13 October 2026                                   11 April 2026
+
+
+       Deployment Experience and Considerations for Unicast VRRP
+               draft-abinabraham-vrrp-unicast-overview-00
+
+Abstract
+
+   This document surveys deployed approaches to operating the Virtual
+   Router Redundancy Protocol (VRRP) over unicast transport in
+   environments where the multicast assumptions of RFC 9568 are
+   unavailable, undesirable, or operationally constrained.  The document
+   summarizes implementation patterns seen in public documentation,
+   highlights common configuration and operational themes, and
+   identifies interoperability gaps between deployed approaches.
+
+   This document does not define a new interoperable unicast VRRP
+   protocol.  Instead, it records deployment experience and outlines the
+   areas that would need to be addressed by any future standards-track
+   extension to VRRP.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 13 October 2026.
+
+Copyright Notice
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+
+
+
+
+
+Dogra & Abraham          Expires 13 October 2026                [Page 1]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  Scope and Non-Goals . . . . . . . . . . . . . . . . . . . . .   3
+   3.  Standards Baseline  . . . . . . . . . . . . . . . . . . . . .   4
+     3.1.  Assumptions in RFC 9568 . . . . . . . . . . . . . . . . .   4
+     3.2.  Deployment Drivers for Unicast Operation  . . . . . . . .   4
+   4.  Survey of Deployed Unicast VRRP Approaches  . . . . . . . . .   4
+     4.1.  Common Design Families  . . . . . . . . . . . . . . . . .   4
+     4.2.  Examples from Public Documentation  . . . . . . . . . . .   5
+   5.  Common Protocol and Operational Themes  . . . . . . . . . . .   6
+     5.1.  Configured Peers  . . . . . . . . . . . . . . . . . . . .   6
+     5.2.  Packet Transport  . . . . . . . . . . . . . . . . . . . .   7
+     5.3.  TTL and Hop-Limit Validation  . . . . . . . . . . . . . .   7
+     5.4.  Virtual MAC, ARP, and Neighbor Discovery Behavior . . . .   7
+     5.5.  VIP Protection versus Role Selection  . . . . . . . . . .   7
+     5.6.  Management Considerations . . . . . . . . . . . . . . . .   7
+   6.  Interoperability Considerations . . . . . . . . . . . . . . .   8
+   7.  Considerations for Future Standardization . . . . . . . . . .   8
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   Appendix A.  Candidate RFC 9568 Touchpoints for a Future Protocol
+           Specification . . . . . . . . . . . . . . . . . . . . . .   9
+     Definitions . . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     Overview and Protocol Description . . . . . . . . . . . . . . .   9
+     IPv4 and IPv6 Field Descriptions  . . . . . . . . . . . . . . .  10
+     Transmit Rules  . . . . . . . . . . . . . . . . . . . . . . . .  10
+   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  10
+     Informative References  . . . . . . . . . . . . . . . . . . . .  10
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
+
+1.  Introduction
+
+   [RFC9568] defines version 3 of the Virtual Router Redundancy Protocol
+   (VRRP) for IPv4 and IPv6.  VRRP provides a first-hop redundancy
+   mechanism in which multiple routers cooperate so that one router, the
+   Active Router, forwards traffic for a protected virtual router while
+   one or more Backup Routers stand by to take over if needed.
+
+
+
+
+Dogra & Abraham          Expires 13 October 2026                [Page 2]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+   The deployed environment for first-hop redundancy has evolved.  Many
+   service-provider, cloud, overlay, and virtualized environments either
+   do not support the multicast delivery model assumed by [RFC9568] or
+   do not expose it in a form that is operationally equivalent to a
+   classic shared LAN.  As a result, several implementations now support
+   some form of "unicast VRRP".
+
+   Public documentation shows that these implementations do not all make
+   the same design choices.  Some preserve the traditional VRRP gateway
+   protection model and primarily replace multicast advertisement
+   delivery with configured unicast peers.  Others use VRRP-derived
+   state exchange to solve a broader routed active/backup role-selection
+   problem.
+
+   The purpose of this document is to capture that deployment experience
+   and describe where the common ground ends.  This provides a basis for
+   discussing whether future standardization should focus on a minimal
+   unicast transport extension for VRRP, a richer multi-peer unicast
+   profile, or a separate active/standby election mechanism for routed
+   environments.
+
+2.  Scope and Non-Goals
+
+   This document is informational.  It documents publicly visible
+   industry practice and the resulting design space.  It is not a
+   protocol specification and it does not update [RFC9568].
+
+   This document has the following goals:
+
+   *  describe the multicast and LAN assumptions in [RFC9568],
+
+   *  summarize deployed unicast VRRP implementation models,
+
+   *  highlight operational and interoperability differences, and
+
+   *  identify the sections of [RFC9568] that would likely need revision
+      in a future standards-track effort.
+
+   This document intentionally does not:
+
+   *  claim interoperability among deployed unicast implementations,
+
+   *  specify a new wire protocol, or
+
+   *  declare one vendor-specific implementation model to be the
+      standard.
+
+
+
+
+
+Dogra & Abraham          Expires 13 October 2026                [Page 3]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+3.  Standards Baseline
+
+   The starting point for any discussion of unicast VRRP is the protocol
+   model in [RFC9568].
+
+3.1.  Assumptions in RFC 9568
+
+   [RFC9568] specifies VRRP operation on a shared LAN.  VRRP
+   advertisements are sent to the well-known VRRP multicast destination
+   addresses for IPv4 and IPv6, and receive-side processing checks the
+   IPv4 TTL or IPv6 Hop Limit to ensure that the packet has not
+   traversed a remote network.
+
+   The protocol is also tightly coupled to the use of a Virtual Router
+   MAC address and to host-facing ARP or Neighbor Discovery behavior
+   associated with first-hop gateway protection on a shared segment.
+
+3.2.  Deployment Drivers for Unicast Operation
+
+   Operators increasingly deploy redundant routers in routed, overlay,
+   and virtualized environments where native LAN multicast is not
+   available or is operationally inconvenient.  Public cloud is one
+   example, but the details matter.  Azure Virtual Network explicitly
+   supports only unicast traffic within the virtual network
+   [AZURE-VNET-FAQ], while AWS supports multicast through Transit
+   Gateway multicast rather than through the simple on-link model
+   assumed by classic VRRP [AWS-TGW-MCAST].
+
+   In these environments, operators still want fast failure detection
+   and deterministic active/backup behavior for one or more protected
+   addresses, prefixes, or route-owner roles.  This operational demand
+   is the primary reason unicast VRRP variants have emerged.
+
+4.  Survey of Deployed Unicast VRRP Approaches
+
+   This section summarizes implementation behavior described in publicly
+   available documentation.  The absence of a feature in this survey
+   only means that it was not found in the referenced public
+   documentation.
+
+4.1.  Common Design Families
+
+   The published implementations reviewed by the authors fit roughly
+   into three families:
+
+   1.  A transport-replacement model in which VRRP largely preserves its
+       role as a first-hop redundancy mechanism while advertisement
+       delivery is changed from multicast to configured unicast peers.
+
+
+
+Dogra & Abraham          Expires 13 October 2026                [Page 4]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+   2.  A multi-peer unicast model in which multiple peers can be
+       configured explicitly and additional source or TTL validation
+       controls are provided.
+
+   3.  A routed active/backup election model in which VRRP-derived
+       protocol elements are used for role selection across a Layer 3
+       network and not always for classic host-facing gateway
+       protection.
+
+4.2.  Examples from Public Documentation
+
+   +================+=======+================+=========================+
+   | Implementation |Unicast| Peer model     | Operational notes       |
+   |                |support|                |                         |
+   |                |found  |                |                         |
+   +================+=======+================+=========================+
+   | Cisco IOS XR   |Yes    | Two-node       | Preserves VIP-centric   |
+   |                |       | unicast peer   | first-hop redundancy    |
+   |                |       | model          | behavior and disables   |
+   |                |       |                | multicast VRRP when     |
+   |                |       |                | unicast is configured   |
+   |                |       |                | [CISCO-XR-VRRP]         |
+   +----------------+-------+----------------+-------------------------+
+   | Huawei VRP     |Yes    | Two-node       | Documents a             |
+   |                |       | routed peer    | proprietary             |
+   |                |       | model          | VRRPv2-based unicast    |
+   |                |       |                | mode, configurable UDP  |
+   |                |       |                | port usage, optional    |
+   |                |       |                | authentication, and     |
+   |                |       |                | semantics that differ   |
+   |                |       |                | from common VRRP        |
+   |                |       |                | gateway protection      |
+   |                |       |                | [HUAWEI-UC-VRRP]        |
+   |                |       |                | [HUAWEI-UC-VRRP-PORT]   |
+   +----------------+-------+----------------+-------------------------+
+   | Keepalived     |Yes    | Multi-peer     | Supports peer lists,    |
+   |                |       | unicast model  | source validation, and  |
+   |                |       |                | TTL controls; also      |
+   |                |       |                | notes that unicast      |
+   |                |       |                | peers are outside       |
+   |                |       |                | strict RFC behavior     |
+   |                |       |                | [KEEPALIVED]            |
+   +----------------+-------+----------------+-------------------------+
+   | VyOS           |Yes    | Peer-based     | Supports explicit peer  |
+   |                |       | unicast model  | and source              |
+   |                |       |                | configuration and an    |
+   |                |       |                | optional compatibility  |
+   |                |       |                | mode closer to classic  |
+
+
+
+Dogra & Abraham          Expires 13 October 2026                [Page 5]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+   |                |       |                | VRRP semantics          |
+   |                |       |                | [VYOS-HA]               |
+   +----------------+-------+----------------+-------------------------+
+   | Juniper Cloud- |Yes    | Cloud active/  | Documents unicast VRRP  |
+   | Native Router  |       | backup role    | in cloud workflows and  |
+   |                |       | model          | uses VRRP state to      |
+   |                |       |                | influence route-table   |
+   |                |       |                | ownership in AWS-       |
+   |                |       |                | oriented deployments    |
+   |                |       |                | [JUNIPER-CNR-VRRP]      |
+   |                |       |                | [JUNIPER-CNR-EKS]       |
+   +----------------+-------+----------------+-------------------------+
+   | MikroTik       |Not    | Classic        | Public documentation    |
+   | RouterOS       |found  | shared-segment | reviewed by the         |
+   |                |       | VRRP           | authors remains         |
+   |                |       |                | aligned with multicast  |
+   |                |       |                | VRRP behavior           |
+   |                |       |                | [MIKROTIK-VRRP]         |
+   +----------------+-------+----------------+-------------------------+
+   | FRRouting      |Not    | Classic        | Public documentation    |
+   |                |found  | shared-segment | reviewed by the         |
+   |                |       | VRRP           | authors describes       |
+   |                |       |                | VRRPv2 and VRRPv3       |
+   |                |       |                | behavior on Linux       |
+   |                |       |                | without documenting a   |
+   |                |       |                | unicast mode            |
+   |                |       |                | [FRR-VRRP]              |
+   +----------------+-------+----------------+-------------------------+
+
+            Table 1: Examples of deployed unicast VRRP behavior
+
+5.  Common Protocol and Operational Themes
+
+5.1.  Configured Peers
+
+   Every deployed unicast approach reviewed by the authors replaces
+   passive discovery through multicast reception with some form of
+   explicit peer configuration.  The most basic form is a single
+   configured peer address for a two-node deployment.  Other
+   implementations support a list of peers and optional source address
+   configuration.
+
+
+
+
+
+
+
+
+
+
+Dogra & Abraham          Expires 13 October 2026                [Page 6]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+5.2.  Packet Transport
+
+   The reviewed implementations do not all converge on one transport
+   model.  Some are described as unicast delivery of VRRP
+   advertisements, while Huawei documents a VRRPv2-based proprietary
+   unicast mode with a configurable UDP port.  This is a significant
+   interoperability fault line because not all implementations appear to
+   preserve the exact packet and transport assumptions of [RFC9568].
+
+5.3.  TTL and Hop-Limit Validation
+
+   The receive-side IPv4 TTL or IPv6 Hop Limit check in [RFC9568] is a
+   core part of VRRP's LAN-scoped security model.  Deployed unicast
+   implementations preserve this logic to varying degrees.  Some
+   preserve the value 255 check, some expose minimum and maximum TTL
+   controls, and some rely more heavily on source address validation
+   because the protected peers are no longer confined to one simple
+   shared segment.
+
+5.4.  Virtual MAC, ARP, and Neighbor Discovery Behavior
+
+   Deployed implementations differ on whether unicast VRRP is still
+   fundamentally a host-facing first-hop redundancy mechanism.  In the
+   conservative transport-replacement model, the Virtual Router MAC
+   address, ARP behavior, gratuitous ARP, and IPv6 Neighbor Discovery
+   logic remain important.  In more routed active/backup models, the
+   role of a Virtual Router MAC address may be reduced or the first-hop
+   gateway semantics may no longer be the primary objective.
+
+5.5.  VIP Protection versus Role Selection
+
+   The most important semantic split in the deployment space is whether
+   "unicast VRRP" is being used to protect a virtual first-hop address
+   or to perform a broader active/backup role election across a Layer 3
+   topology.  The former use case is much closer to the original VRRP
+   model.  The latter use case may still reuse VRRP concepts and state,
+   but it stretches beyond the assumptions of [RFC9568].
+
+5.6.  Management Considerations
+
+   Publicly documented unicast implementations expose additional knobs
+   beyond those needed for multicast VRRP.  Examples include peer lists,
+   source-address pinning, TTL or hop-limit validation policy, transport
+   selection, and unicast-specific authentication.  These are not
+   modeled by the current base VRRP specification and would need
+   explicit treatment in any future management model update.
+
+
+
+
+
+Dogra & Abraham          Expires 13 October 2026                [Page 7]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+6.  Interoperability Considerations
+
+   This document does not assume that the deployed implementations
+   summarized above interoperate on the wire.  In fact, the reviewed
+   public documentation strongly suggests that interoperability should
+   not be assumed.
+
+   The main interoperability gaps are:
+
+   *  pairwise versus multi-peer operation,
+
+   *  differences in packet transport,
+
+   *  different receive-side source and TTL validation models,
+
+   *  different expectations around the Virtual Router MAC address, ARP,
+      and Neighbor Discovery, and
+
+   *  different problem statements, namely first-hop gateway protection
+      versus routed active/backup role selection.
+
+   For that reason, the most accurate near-term framing for unicast VRRP
+   is a family of deployment techniques rather than a single
+   interoperable extension of [RFC9568].
+
+7.  Considerations for Future Standardization
+
+   The deployment experience summarized in this document suggests three
+   possible directions for future work:
+
+   1.  A minimal extension that preserves VRRP packet semantics and
+       first-hop redundancy behavior while replacing multicast delivery
+       with configured unicast peers.
+
+   2.  A richer unicast VRRP profile that standardizes peer lists,
+       source validation, and multi-peer behavior.
+
+   3.  A separate active/backup election mechanism for routed
+       environments, if the working group concludes that the routed role
+       selection use case should not be forced into the classic VRRP
+       model.
+
+   Whichever direction is chosen, it would need to make an explicit
+   decision about scope.  A future document should not try to
+   standardize all observed deployment styles at once unless it is
+   prepared to define multiple profiles with clear interoperability
+   expectations.
+
+
+
+
+Dogra & Abraham          Expires 13 October 2026                [Page 8]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+8.  Security Considerations
+
+   [RFC9568] relies in part on the IPv4 TTL or IPv6 Hop Limit value of
+   255 to keep attacks scoped to the local network [RFC5082].  Moving
+   VRRP-like behavior to unicast environments can change that threat
+   model, especially when peers are separated by one or more routed hops
+   or when the protected role is no longer limited to host-facing
+   gateway service on a LAN.
+
+   Publicly documented implementations respond to this in different
+   ways, including explicit peer allow-lists, configured source
+   addresses, TTL or hop-limit range checks, and vendor-specific
+   authentication.  These mitigations improve robustness, but they also
+   show that deployed unicast approaches do not currently share a single
+   security model.
+
+   Any future standards-track unicast VRRP specification would need to
+   define a precise peer trust model, specify how receive-side
+   validation is performed, and describe what protections are expected
+   when the protocol operates beyond a single shared LAN.
+
+9.  IANA Considerations
+
+   This document has no IANA actions.
+
+Appendix A.  Candidate RFC 9568 Touchpoints for a Future Protocol
+Specification
+
+   The brainstorming for this work identified several parts of [RFC9568]
+   that would likely need review if the community later decides to
+   standardize a unicast extension rather than only document deployment
+   experience.
+
+Definitions
+
+   Section 1.7 of [RFC9568] defines the Virtual Router MAC address in
+   terms that are tightly linked to VRRP advertisement delivery.  A
+   future unicast protocol specification would likely need to clarify
+   whether the Virtual Router MAC address remains mandatory, optional,
+   or orthogonal to advertisement delivery.
+
+Overview and Protocol Description
+
+   Section 3 of [RFC9568] and Section 5 of [RFC9568] explicitly describe
+   VRRP in multicast terms.  A future standards-track document would
+   need to state whether unicast operation is a separate mode, whether
+   it changes the topology assumptions, and what remains common across
+   multicast and unicast operation.
+
+
+
+Dogra & Abraham          Expires 13 October 2026                [Page 9]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+IPv4 and IPv6 Field Descriptions
+
+   The brainstormed protocol impact points align with Section 5.1.1 of
+   [RFC9568] and Section 5.1.2 of [RFC9568].  A future protocol
+   specification would need to revisit destination addressing, source-
+   address selection, and how the TTL or Hop Limit checks apply in
+   routed or peer-configured deployments.
+
+Transmit Rules
+
+   Section 7.2 of [RFC9568] instructs a sender to transmit to the VRRP
+   IPv4 or IPv6 multicast group.  Any interoperable unicast protocol
+   specification would need to replace this with clear peer-selection
+   and destination-addressing rules.
+
+References
+
+Informative References
+
+   [AWS-TGW-MCAST]
+              Amazon Web Services, "Multicast for Transit Gateways",
+              <https://docs.aws.amazon.com/vpc/latest/tgw/tgw-multicast-
+              overview.html>.
+
+   [AZURE-VNET-FAQ]
+              Microsoft, "Azure Virtual Network FAQ",
+              <https://learn.microsoft.com/en-us/azure/virtual-network/
+              virtual-networks-faq#do-virtual-networks-support-
+              multicast-or-broadcast>.
+
+   [CISCO-XR-VRRP]
+              Cisco Systems, "Implementing VRRP on Cisco IOS XR",
+              Includes a section on Unicast VRRP,
+              <https://www.cisco.com/c/en/us/td/docs/routers/asr9000/
+              software/asr9k-r7-9/ip-addresses/configuration/guide/b-ip-
+              addresses-cg-asr9000-79x/implementing-vrrp.html>.
+
+   [FRR-VRRP] FRRouting Project, "FRRouting VRRP",
+              <https://docs.frrouting.org/en/stable-7.5/vrrp.html>.
+
+   [HUAWEI-UC-VRRP]
+              Huawei, "VRRP in Unicast Mode", Huawei HedEx
+              documentation, EDOC1100363264.
+
+   [HUAWEI-UC-VRRP-PORT]
+              Huawei, "unicast-vrrp port Command Reference", Huawei
+              HedEx documentation, EDOC1100277644.
+
+
+
+
+Dogra & Abraham          Expires 13 October 2026               [Page 10]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+   [JUNIPER-CNR-EKS]
+              Juniper Networks, "Cloud-Native Router Deployment on
+              Amazon EKS",
+              <https://www.juniper.net/documentation/us/en/software/
+              cloud-native-router25.4/cloud-native-router-deployment-
+              guide/topics/concept/system-resource-requirements-
+              eks.html>.
+
+   [JUNIPER-CNR-VRRP]
+              Juniper Networks, "Cloud-Native Router VRRP Overview",
+              <https://www.juniper.net/documentation/us/en/software/
+              cloud-native-router23.4/cloud-native-router-
+              user/topics/concept/l3-vrrp.html>.
+
+   [KEEPALIVED]
+              Keepalived Project, "keepalived.conf(5) Manpage",
+              <https://www.keepalived.org/manpage.html>.
+
+   [MIKROTIK-VRRP]
+              MikroTik, "RouterOS VRRP",
+              <https://help.mikrotik.com/docs/spaces/ROS/pages/81362945/
+              VRRP>.
+
+   [RFC5082]  Gill, V., Heasley, J., and D. Meyer, "The Generalized TTL
+              Security Mechanism (GTSM)", RFC 5082,
+              DOI 10.17487/RFC5082, October 2007,
+              <https://www.rfc-editor.org/info/rfc5082>.
+
+   [RFC9568]  Lindem, A. and A. Dogra, "Virtual Router Redundancy
+              Protocol (VRRP) Version 3 for IPv4 and IPv6", RFC 9568,
+              DOI 10.17487/RFC9568, April 2024,
+              <https://www.rfc-editor.org/info/rfc9568>.
+
+   [VYOS-HA]  VyOS Project, "VyOS High Availability",
+              <https://docs.vyos.io/en/1.4/configuration/
+              highavailability/>.
+
+Authors' Addresses
+
+   Aditya Dogra
+   Cisco Systems
+   Sarjapur Outer Ring Road
+   Bangalore 560103
+   Karnataka
+   India
+   Email: addogra@cisco.com
+
+
+
+
+
+Dogra & Abraham          Expires 13 October 2026               [Page 11]
+
+Internet-Draft            Unicast VRRP Overview               April 2026
+
+
+   Abin Abraham
+   Cisco Systems
+   Sarjapur Outer Ring Road
+   Bangalore 560103
+   Karnataka
+   India
+   Phone: +91 80 4426 7078
+   Email: abiabrah@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dogra & Abraham          Expires 13 October 2026               [Page 12]
