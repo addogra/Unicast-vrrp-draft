@@ -5,7 +5,7 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude"
     category="info"
     consensus="false"
-    docName="draft-abinabraham-vrrp-unicast-overview-00"
+    docName="draft-abinabraham-vrrp-unicast-deployment-00"
     ipr="trust200902"
     submissionType="IETF"
     sortRefs="true"
@@ -16,7 +16,7 @@
     xml:lang="en">
   <front>
     <title abbrev="Unicast VRRP Overview">Deployment Experience and Considerations for Unicast VRRP</title>
-    <seriesInfo name="Internet-Draft" value="draft-abinabraham-vrrp-unicast-overview-00"/>
+    <seriesInfo name="Internet-Draft" value="draft-abinabraham-vrrp-unicast-deployment-00"/>
     <author initials="A" surname="Dogra" fullname="Aditya Dogra">
       <organization>Cisco Systems</organization>
       <address>
@@ -42,6 +42,20 @@
         </postal>
         <phone>+91 80 4426 7078</phone>
         <email>abiabrah@cisco.com</email>
+      </address>
+    </author>
+    <author initials="S" surname="Krishnamurthy" fullname="Seshan Krishnamurthy">
+      <organization>Cisco Systems</organization>
+      <address>
+        <postal>
+          <street>Sarjapur Outer Ring Road</street>
+          <city>Bangalore</city>
+          <region>Karnataka</region>
+          <code>560103</code>
+          <country>India</country>
+        </postal>
+        <phone>+91 80 4429 2149</phone>
+        <email>seshakri@cisco.com</email>
       </address>
     </author>
     <date day="11" month="April" year="2026"/>

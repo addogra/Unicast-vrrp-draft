@@ -233,7 +233,7 @@ That message is both technically defensible and easy for reviewers to reason abo
 ## 11. Files produced in this work
 
 - `vrrp_ucast_industry_research.md`
-- `draft-abinabraham-vrrp-unicast-overview-00.xml`
+- `draft-abinabraham-vrrp-unicast-deployment-00.xml`
 - `draft-abinabraham-vrrp-unicast-00.xml`
 
 ## 12. Recommended next step

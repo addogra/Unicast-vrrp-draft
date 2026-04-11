@@ -4,12 +4,13 @@
 
 Network Working Group                                           A. Dogra
 Internet-Draft                                                A. Abraham
-Intended status: Informational                             Cisco Systems
-Expires: 13 October 2026                                   11 April 2026
+Intended status: Informational                          S. Krishnamurthy
+Expires: 13 October 2026                                   Cisco Systems
+                                                           11 April 2026
 
 
        Deployment Experience and Considerations for Unicast VRRP
-               draft-abinabraham-vrrp-unicast-overview-00
+              draft-abinabraham-vrrp-unicast-deployment-00
 
 Abstract
 
@@ -52,8 +53,7 @@ Copyright Notice
 
 
 
-
-Dogra & Abraham          Expires 13 October 2026                [Page 1]
+Dogra, et al.            Expires 13 October 2026                [Page 1]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Dogra & Abraham          Expires 13 October 2026                [Page 2]
+Dogra, et al.            Expires 13 October 2026                [Page 2]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -165,7 +165,7 @@ Internet-Draft            Unicast VRRP Overview               April 2026
 
 
 
-Dogra & Abraham          Expires 13 October 2026                [Page 3]
+Dogra, et al.            Expires 13 October 2026                [Page 3]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -221,7 +221,7 @@ Internet-Draft            Unicast VRRP Overview               April 2026
 
 
 
-Dogra & Abraham          Expires 13 October 2026                [Page 4]
+Dogra, et al.            Expires 13 October 2026                [Page 4]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -277,7 +277,7 @@ Internet-Draft            Unicast VRRP Overview               April 2026
 
 
 
-Dogra & Abraham          Expires 13 October 2026                [Page 5]
+Dogra, et al.            Expires 13 October 2026                [Page 5]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -333,7 +333,7 @@ Internet-Draft            Unicast VRRP Overview               April 2026
 
 
 
-Dogra & Abraham          Expires 13 October 2026                [Page 6]
+Dogra, et al.            Expires 13 October 2026                [Page 6]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -389,7 +389,7 @@ Internet-Draft            Unicast VRRP Overview               April 2026
 
 
 
-Dogra & Abraham          Expires 13 October 2026                [Page 7]
+Dogra, et al.            Expires 13 October 2026                [Page 7]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -445,7 +445,7 @@ Internet-Draft            Unicast VRRP Overview               April 2026
 
 
 
-Dogra & Abraham          Expires 13 October 2026                [Page 8]
+Dogra, et al.            Expires 13 October 2026                [Page 8]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -501,7 +501,7 @@ Overview and Protocol Description
 
 
 
-Dogra & Abraham          Expires 13 October 2026                [Page 9]
+Dogra, et al.            Expires 13 October 2026                [Page 9]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -557,7 +557,7 @@ Informative References
 
 
 
-Dogra & Abraham          Expires 13 October 2026               [Page 10]
+Dogra, et al.            Expires 13 October 2026               [Page 10]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -613,7 +613,7 @@ Authors' Addresses
 
 
 
-Dogra & Abraham          Expires 13 October 2026               [Page 11]
+Dogra, et al.            Expires 13 October 2026               [Page 11]
 
 Internet-Draft            Unicast VRRP Overview               April 2026
 
@@ -628,6 +628,14 @@ Internet-Draft            Unicast VRRP Overview               April 2026
    Email: abiabrah@cisco.com
 
 
+   Seshan Krishnamurthy
+   Cisco Systems
+   Sarjapur Outer Ring Road
+   Bangalore 560103
+   Karnataka
+   India
+   Phone: +91 80 4429 2149
+   Email: seshakri@cisco.com
 
 
 
@@ -661,12 +669,4 @@ Internet-Draft            Unicast VRRP Overview               April 2026
 
 
 
-
-
-
-
-
-
-
-
-Dogra & Abraham          Expires 13 October 2026               [Page 12]
+Dogra, et al.            Expires 13 October 2026               [Page 12]
