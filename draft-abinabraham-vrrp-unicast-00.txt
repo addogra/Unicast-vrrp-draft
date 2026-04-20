@@ -236,9 +236,9 @@ Internet-Draft                Unicast VRRP                    April 2026
    Router semantics, virtual IP address behavior, and host-facing
    forwarding behavior remain as specified in [RFC9568].
 
-   Unicast mode is configured per Virtual Router and per address family.
-   A VRRP Router MUST NOT mix multicast mode and unicast mode for the
-   same Virtual Router instance.
+   Unicast mode is configured per Virtual Router.  A VRRP Router MUST
+   NOT mix multicast mode and unicast mode for the same Virtual Router
+   instance.
 
 7.  Peer Configuration
 
@@ -649,7 +649,6 @@ Authors' Addresses
    Bangalore 560103
    Karnataka
    India
-   Phone: +91 80 4426 7078
    Email: abiabrah@cisco.com
 
 
@@ -659,8 +658,9 @@ Authors' Addresses
    Bangalore 560103
    Karnataka
    India
-   Phone: +91 80 4429 2149
    Email: seshakri@cisco.com
+
+
 
 
 

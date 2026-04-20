@@ -40,7 +40,6 @@
           <code>560103</code>
           <country>India</country>
         </postal>
-        <phone>+91 80 4426 7078</phone>
         <email>abiabrah@cisco.com</email>
       </address>
     </author>
@@ -54,7 +53,6 @@
           <code>560103</code>
           <country>India</country>
         </postal>
-        <phone>+91 80 4429 2149</phone>
         <email>seshakri@cisco.com</email>
       </address>
     </author>
@@ -250,7 +248,7 @@
         behavior remain as specified in <xref target="RFC9568"/>.
       </t>
       <t>
-        Unicast mode is configured per Virtual Router and per address family.
+        Unicast mode is configured per Virtual Router.
         A VRRP Router <bcp14>MUST NOT</bcp14> mix multicast mode and unicast
         mode for the same Virtual Router instance.
       </t>

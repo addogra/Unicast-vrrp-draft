@@ -1,0 +1,186 @@
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                    idnits ▶ 3.0.0-alpha.74                     
+▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+ Path  /Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-00.txt
+ Mode  normal [0]
+
+❯ Pre-parsing validations
+❯ Validating filename
+✔ Validating filename
+❯ Validating encoding
+✔ Validating encoding
+❯ Decoding UTF-8
+✔ Decoding UTF-8
+❯ Validating content
+✔ Validating content
+✔ Pre-parsing validations
+❯ Parsing document
+❯ Parsing TXT document
+✔ Parsing TXT document
+✔ Parsing document
+❯ Common validations
+❯ Document name
+❯ Abstract section
+❯ Introduction section
+❯ Security considerations section
+❯ Author section(s)
+❯ References section(s)
+❯ IANA considerations section
+❯ FQDNs
+❯ IPs
+❯ Requirement Level Keywords
+❯ Terms Style
+❯ Date
+❯ Updates / Obsoletes references
+❯ Category
+❯ Version
+❯ References in text
+❯ Downrefs
+❯ Normative references
+❯ Unclassified references
+❯ Stale references
+✔ Document name
+✔ Abstract section
+✔ Introduction section
+✔ Security considerations section
+✔ Author section(s)
+✔ References section(s)
+✔ IANA considerations section
+✔ FQDNs
+✔ IPs
+✔ Requirement Level Keywords
+✔ Terms Style
+✔ Date
+✔ Updates / Obsoletes references
+✔ Category
+✔ Version
+✔ References in text
+✔ Unclassified references
+✔ Stale references
+✔ Downrefs
+✔ Normative references
+✔ Common validations
+❯ TXT-specific validations
+❯ Line length
+❯ Code comments
+❯ Copyright notice section
+❯ Status of this memo section
+❯ Abstract section numbered
+❯ Reference links
+❯ Reference style
+❯ PK or BM first line
+❯ Line extra spacing
+❯ Code block licenses
+❯ Updates and obsoletes lines
+❯ Draft references
+❯ Informational references
+❯ Copyright date
+❯ License declarations
+❯ Copyright section
+❯ Page length
+❯ Previous copyright section
+❯ Pages numbering
+✔ Line length
+✔ Code comments
+✔ Copyright notice section
+✔ Status of this memo section
+✔ Abstract section numbered
+✔ Reference links
+✔ Reference style
+✔ PK or BM first line
+✔ Line extra spacing
+✔ Code block licenses
+✔ Updates and obsoletes lines
+✔ Draft references
+✔ Copyright date
+✔ License declarations
+✔ Copyright section
+✔ Page length
+✔ Previous copyright section
+✔ Pages numbering
+✔ Informational references
+✔ TXT-specific validations
+❯ TXT-specific - Internet-Draft validations
+❯ Internet-Draft indicator
+❯ Expires line
+❯ Acceptable paragraph noting that the document is a draft
+❯ Acceptable paragraph calling out six month validity
+❯ Document name appears on first page
+❯ Pointing to the list of current I-Ds
+❯ Multiple pointing to the list of current I-Ds
+❯ Has more than page threshold and no TOC
+❯ Disclosure text
+❯ submission compliance line page
+❯ Separated form feeds
+❯ Form feed separate line with some text
+❯ Unexpected indentation
+✔ Internet-Draft indicator
+✔ Expires line
+✔ Acceptable paragraph noting that the document is a draft
+✔ Acceptable paragraph calling out six month validity
+✔ Document name appears on first page
+✔ Pointing to the list of current I-Ds
+✔ Multiple pointing to the list of current I-Ds
+✔ Has more than page threshold and no TOC
+✔ Disclosure text
+✔ submission compliance line page
+✔ Separated form feeds
+✔ Form feed separate line with some text
+✔ Unexpected indentation
+✔ TXT-specific - Internet-Draft validations
+
+❌ Review the 3 errors, 2 warnings, 4 comments listed below.
+
+███████▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+ ERROR  3 nits of ⛔ error severity
+███████▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+
+ 1  POSSIBLE_DOWNREF
+ └- Desc - Reference to RFC 2119 is possible downref
+ └- Ref  - https://www.rfc-editor.org/info/bcp97
+
+ 2  POSSIBLE_DOWNREF
+ └- Desc - Reference to RFC 8174 is possible downref
+ └- Ref  - https://www.rfc-editor.org/info/bcp97
+
+ 3  POSSIBLE_DOWNREF
+ └- Desc - Reference to RFC 9568 is possible downref
+ └- Ref  - https://www.rfc-editor.org/info/bcp97
+
+█████████▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+ WARNING  2 nits of ⚠️ warning severity
+█████████▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+
+ 4  PREFER_BCP14_REF
+ └- Desc - Consider referencing BCP14 instead of (or in addition to) RFC2119/RFC8174, as BCP14 encompasses both specifications.
+ └- Ref  - https://www.rfc-editor.org/info/bcp14
+
+ 5  DOC_DATE_IN_PAST
+ └- Desc - The document date is 5 days in the past. Is this intentional?
+ └- Ref  - https://authors.ietf.org/en/rfcxml-vocabulary#date
+
+█████████▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+ COMMENT  4 nits of ℹ️ comment severity
+█████████▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+
+ 6  UNDEFINED_STATUS
+ └- Desc - RFC 2119 does not have a defined status or could not be fetched.
+ └- Ref  - https://www.rfc-editor.org/info/rfc2119
+
+ 7  UNDEFINED_STATUS
+ └- Desc - RFC 8174 does not have a defined status or could not be fetched.
+ └- Ref  - https://www.rfc-editor.org/info/rfc8174
+
+ 8  UNDEFINED_STATUS
+ └- Desc - RFC 9568 does not have a defined status or could not be fetched.
+ └- Ref  - https://www.rfc-editor.org/info/rfc9568
+
+ 9  UNDEFINED_STATUS
+ └- Desc - The informative reference RFC 5082 does not have a defined status or could not be fetched.
+ └- Ref  - https://www.rfc-editor.org/info/rfc5082
+
+----------------------------------------------------------------
+
+❌ Review the 3 errors, 2 warnings, 4 comments listed above.
+

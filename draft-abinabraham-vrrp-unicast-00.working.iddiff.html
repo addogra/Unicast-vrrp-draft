@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Diff: snapshot-002-draft-abinabraham-vrrp-unicast-00.txt - draft-abinabraham-vrrp-unicast-00.txt</title>
+    <style>
+      body {font-family: monospace}
+      table {
+        border-spacing: 0;
+      }
+      td {
+        padding: 0;
+        white-space: pre;
+        vertical-align: top;
+        font-size: 0.86em;
+      }
+      th {
+        padding: 0;
+        text-align: center;
+      }
+      .left { background-color: #EEE; }
+      .right { background-color: #FFF; }
+      .lblock { background-color: #BFB; }
+      .rblock { background-color: #FF8; }
+      .delete { background-color: #ACF; }
+      .insert { background-color: #8FF; }
+      .change { background-color: gray; }
+      .header { background-color: orange; }
+      .w-delete {
+        color: #F00;
+        text-decoration: line-through;
+      }
+      .w-insert {
+        color: #008000;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+          <th class="header" scope="col">snapshot-002-draft-abinabraham-vrrp-unicast-00.txt</th>
+          <td>&nbsp;</td>
+          <th class="header" scope="col">draft-abinabraham-vrrp-unicast-00.txt</th>
+        </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="right">&nbsp;</td>
+      </tr>
+      <tr id="context-0">
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-0">
+           <small>Skipping</small>
+          </a>
+        </th>
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-0">
+           <small>Skipping</small>
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   multicast destination address.  Instead, it MUST send a copy of each
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   multicast destination address.  Instead, it MUST send a copy of each
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   advertisement to each address in the configured Unicast Peer List.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   advertisement to each address in the configured Unicast Peer List.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Except as updated by this document, the VRRP packet format, VRRP
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Except as updated by this document, the VRRP packet format, VRRP
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   state machine, timer calculations, preemption behavior, Virtual
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   state machine, timer calculations, preemption behavior, Virtual
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Router semantics, virtual IP address behavior, and host-facing
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Router semantics, virtual IP address behavior, and host-facing
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   forwarding behavior remain as specified in [RFC9568].
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   forwarding behavior remain as specified in [RFC9568].
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   Unicast mode is configured per Virtual Router and per address family.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Unicast mode is configured per Virtual Router.  A VRRP Router MUST
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   A VRRP Router MUST NOT mix multicast mode and unicast mode for the
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   NOT mix multicast mode and unicast mode for the same Virtual Router
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   same Virtual Router instance.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   instance.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">7.  Peer Configuration
+</td>
+        <td>&nbsp;</td>
+        <td class="right">7.  Peer Configuration
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   A Virtual Router operating in unicast mode MUST be configured with
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   A Virtual Router operating in unicast mode MUST be configured with
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   one or more Unicast Peers.  A configuration that enables unicast mode
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   one or more Unicast Peers.  A configuration that enables unicast mode
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   without at least one peer is invalid, and the Virtual Router MUST NOT
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   without at least one peer is invalid, and the Virtual Router MUST NOT
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   operate in unicast mode until corrected.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   operate in unicast mode until corrected.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="right">&nbsp;</td>
+      </tr>
+      <tr id="context-1">
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-1">
+           <small>Skipping</small>
+          </a>
+        </th>
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-1">
+           <small>Skipping</small>
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Abin Abraham
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Abin Abraham
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Cisco Systems
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Cisco Systems
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Sarjapur Outer Ring Road
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Sarjapur Outer Ring Road
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Bangalore 560103
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Bangalore 560103
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Karnataka
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Karnataka
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   India
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   India
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   Phone: +91 80 4426 7078
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Email: abiabrah@cisco.com
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Email: abiabrah@cisco.com
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Seshan Krishnamurthy
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Seshan Krishnamurthy
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Cisco Systems
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Cisco Systems
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Sarjapur Outer Ring Road
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Sarjapur Outer Ring Road
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Bangalore 560103
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Bangalore 560103
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Karnataka
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Karnataka
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   India
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   India
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   Phone: +91 80 4429 2149
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Email: seshakri@cisco.com
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Email: seshakri@cisco.com
+</td>
+      </tr>
+      </tbody>
+    </table></body>
+</html>
