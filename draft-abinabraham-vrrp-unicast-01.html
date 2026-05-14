@@ -23,8 +23,9 @@
         remains the default mode. This document preserves the VRRP packet
         format, protocol number, virtual IP semantics, Virtual Router MAC
         behavior, and host-facing forwarding behavior defined in RFC 9568,
-        while adding explicit peer configuration, receive-side source
-        validation, and YANG data model extensions for unicast operation.
+        while adding explicit peer configuration and receive-side source
+        validation for unicast operation. YANG data model augmentation is
+        deferred until the VRRP YANG bis work is stable.
        
     " name="description">
 <meta content="xml2rfc 3.33.0" name="generator">
@@ -1294,8 +1295,9 @@ li > p:last-of-type:only-child {
         remains the default mode. This document preserves the VRRP packet
         format, protocol number, virtual IP semantics, Virtual Router MAC
         behavior, and host-facing forwarding behavior defined in RFC 9568,
-        while adding explicit peer configuration, receive-side source
-        validation, and YANG data model extensions for unicast operation.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+        while adding explicit peer configuration and receive-side source
+        validation for unicast operation. YANG data model augmentation is
+        deferred until the VRRP YANG bis work is stable.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1405,21 +1407,18 @@ li > p:last-of-type:only-child {
             <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-changes-from-version-00" class="internal xref">Changes from Version 00</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-references" class="internal xref">References</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-references" class="internal xref">References</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14.2.1">
-                <p id="section-toc.1-1.14.2.1.1"><a href="#section-14.1" class="auto internal xref">14.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.1">
+                <p id="section-toc.1-1.13.2.1.1"><a href="#section-13.1" class="auto internal xref">13.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14.2.2">
-                <p id="section-toc.1-1.14.2.2.1"><a href="#section-14.2" class="auto internal xref">14.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.2">
+                <p id="section-toc.1-1.13.2.2.1"><a href="#section-13.2" class="auto internal xref">13.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
             </ul>
 </li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
-            <p id="section-toc.1-1.15.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1834,10 +1833,11 @@ li > p:last-of-type:only-child {
         is currently being revised by
         <span>[<a href="#I-D.ietf-rtgwg-vrrp-rfc8347bis" class="cite xref">I-D.ietf-rtgwg-vrrp-rfc8347bis</a>]</span>, which is intended to
         obsolete <span>[<a href="#RFC8347" class="cite xref">RFC8347</a>]</span>. Deferring the unicast VRRP YANG
-        augmentation until that work is approved allows the augmentation to be
-        based on the stable successor to <span>[<a href="#RFC8347" class="cite xref">RFC8347</a>]</span>, avoids
-        unnecessary churn against a moving base model, and helps ensure
-        alignment with the final VRRP YANG schema.<a href="#section-10-1" class="pilcrow">¶</a></p>
+        augmentation until that work is approved or published allows the
+        augmentation to be based on the stable successor to
+        <span>[<a href="#RFC8347" class="cite xref">RFC8347</a>]</span>, avoids unnecessary churn against a moving
+        base model, and helps ensure alignment with the final VRRP YANG
+        schema.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <p id="section-10-2">
         A future revision of this document, or a companion YANG document, is
         expected to define the management model for configuring the VRRP
@@ -1879,34 +1879,13 @@ li > p:last-of-type:only-child {
         This document requests no IANA actions.<a href="#section-12-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="changes-00">
 <section id="section-13">
-      <h2 id="name-changes-from-version-00">
-<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-changes-from-version-00" class="section-name selfRef">Changes from Version 00</a>
-      </h2>
-<p id="section-13-1">
-        This section is to be removed before publication as an RFC.<a href="#section-13-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-13-2.1">Changed the intended status from Informational to Standards Track.<a href="#section-13-2.1" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-13-2.2">Clarified that multicast mode remains the default mode.<a href="#section-13-2.2" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-13-2.3">Clarified that this document updates VRRPv3 and does not update VRRPv2.<a href="#section-13-2.3" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-13-2.4">Added YANG considerations that defer YANG augmentation until <span>[<a href="#I-D.ietf-rtgwg-vrrp-rfc8347bis" class="cite xref">I-D.ietf-rtgwg-vrrp-rfc8347bis</a>]</span> has been approved or published.<a href="#section-13-2.4" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-13-2.5">Removed implementation survey material from the protocol specification body.<a href="#section-13-2.5" class="pilcrow">¶</a>
-</li>
-      </ul>
-</section>
-</div>
-<section id="section-14">
       <h2 id="name-references">
-<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
-<section id="section-14.1">
+<section id="section-13.1">
         <h3 id="name-normative-references">
-<a href="#section-14.1" class="section-number selfRef">14.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-13.1" class="section-number selfRef">13.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
@@ -1923,9 +1902,9 @@ li > p:last-of-type:only-child {
 <dd class="break"></dd>
 </dl>
 </section>
-<section id="section-14.2">
+<section id="section-13.2">
         <h3 id="name-informative-references">
-<a href="#section-14.2" class="section-number selfRef">14.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-13.2" class="section-number selfRef">13.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="I-D.ietf-rtgwg-vrrp-rfc8347bis">[I-D.ietf-rtgwg-vrrp-rfc8347bis]</dt>

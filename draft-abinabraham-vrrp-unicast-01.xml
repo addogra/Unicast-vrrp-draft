@@ -77,8 +77,9 @@
         remains the default mode. This document preserves the VRRP packet
         format, protocol number, virtual IP semantics, Virtual Router MAC
         behavior, and host-facing forwarding behavior defined in RFC 9568,
-        while adding explicit peer configuration, receive-side source
-        validation, and YANG data model extensions for unicast operation.
+        while adding explicit peer configuration and receive-side source
+        validation for unicast operation. YANG data model augmentation is
+        deferred until the VRRP YANG bis work is stable.
       </t>
     </abstract>
   </front>
@@ -483,10 +484,11 @@
         is currently being revised by
         <xref target="I-D.ietf-rtgwg-vrrp-rfc8347bis"/>, which is intended to
         obsolete <xref target="RFC8347"/>. Deferring the unicast VRRP YANG
-        augmentation until that work is approved allows the augmentation to be
-        based on the stable successor to <xref target="RFC8347"/>, avoids
-        unnecessary churn against a moving base model, and helps ensure
-        alignment with the final VRRP YANG schema.
+        augmentation until that work is approved or published allows the
+        augmentation to be based on the stable successor to
+        <xref target="RFC8347"/>, avoids unnecessary churn against a moving
+        base model, and helps ensure alignment with the final VRRP YANG
+        schema.
       </t>
       <t>
         A future revision of this document, or a companion YANG document, is
@@ -529,19 +531,6 @@
       </t>
     </section>
 
-    <section anchor="changes-00">
-      <name>Changes from Version 00</name>
-      <t>
-        This section is to be removed before publication as an RFC.
-      </t>
-      <ul spacing="normal">
-        <li>Changed the intended status from Informational to Standards Track.</li>
-        <li>Clarified that multicast mode remains the default mode.</li>
-        <li>Clarified that this document updates VRRPv3 and does not update VRRPv2.</li>
-        <li>Added YANG considerations that defer YANG augmentation until <xref target="I-D.ietf-rtgwg-vrrp-rfc8347bis"/> has been approved or published.</li>
-        <li>Removed implementation survey material from the protocol specification body.</li>
-      </ul>
-    </section>
   </middle>
 
   <back>

@@ -19,7 +19,7 @@ There are now two local draft packages:
 
 The main -01 draft defers YANG augmentation until the VRRP YANG bis work is stable:
 
-> This document does not define a YANG module. The VRRP YANG data model is currently being revised by `draft-ietf-rtgwg-vrrp-rfc8347bis`, which is intended to obsolete RFC 8347. Deferring the unicast VRRP YANG augmentation until that work is approved allows the augmentation to be based on the stable successor to RFC 8347, avoids unnecessary churn against a moving base model, and helps ensure alignment with the final VRRP YANG schema.
+> This document does not define a YANG module. The VRRP YANG data model is currently being revised by `draft-ietf-rtgwg-vrrp-rfc8347bis`, which is intended to obsolete RFC 8347. Deferring the unicast VRRP YANG augmentation until that work is approved or published allows the augmentation to be based on the stable successor to RFC 8347, avoids unnecessary churn against a moving base model, and helps ensure alignment with the final VRRP YANG schema.
 
 ## What IETF Reviewers Are Likely to Care About
 
@@ -45,6 +45,8 @@ Useful links:
 - [RTGDIR early review thread](https://mailarchive.ietf.org/arch/msg/rtgwg/A2qhgy0GzS7CWQ46gL1vGWePDjE/)
 - [Acee response to RTGDIR review](https://mailarchive.ietf.org/arch/msg/rtgwg/xH6t-iPVipzc0opzZ0HG053bnDw/)
 - [Acee request for substantive YANG review](https://mailarchive.ietf.org/arch/msg/rtgwg/mr1kAJ5Dpnen4CdYYnQG7llBH4U/)
+
+As of 2026-05-14, the datatracker lists `draft-ietf-rtgwg-vrrp-rfc8347bis-15` as an active RTGWG Internet-Draft, submitted to the IESG for publication, in AD Evaluation, with YANG validation reporting 0 errors and 0 warnings.
 
 ## Changes Made in the Proposed -01
 
@@ -74,7 +76,7 @@ The current `draft-ietf-rtgwg-vrrp-rfc8347bis-15` model already has a clean per-
 
 The right approach is to augment the existing model, not define a parallel unicast VRRP model.
 
-The proposed -01 adds:
+The retained `-01-with-yang` working artifact adds:
 
 - feature `unicast-vrrp`
 - typedef `vrrp-advertisement-mode`
@@ -144,7 +146,7 @@ A configured peer list is central to unicast mode. If the protocol draft does no
 
 Recommendation:
 
-Keep the YANG section in -01 for now. During WG discussion, decide whether it stays in this draft or splits into a companion YANG draft.
+Keep the main -01 draft focused on protocol behavior and include a YANG Considerations section that explicitly defers the augmentation until `draft-ietf-rtgwg-vrrp-rfc8347bis` is approved or published. Retain `-01-with-yang` as implementation-ready input for a future revision or companion YANG draft.
 
 ### Finding 6: YANG peer validation needs careful modeling
 
@@ -156,29 +158,71 @@ Recommendation:
 
 Ask a YANG doctor or RTGWG YANG reviewer to confirm the final modeling pattern before submission.
 
-### Finding 7: Security text needs to be explicit about management risk
+### Finding 7: Future YANG security text needs to be explicit about management risk
 
 Severity: Medium
 
-Changing `advertisement-mode` or the peer list can break first-hop redundancy. This is not just operational state; it is safety-critical configuration.
+Changing `advertisement-mode` or the peer list can break first-hop redundancy. This is not just operational state; it is safety-critical configuration. Since the main no-YANG -01 defers the YANG module, this risk should be carried into the future YANG revision or companion YANG draft.
 
 Recommendation:
 
-Keep the YANG security text and consider adding NACM-specific language if reviewers ask for it.
+Keep the YANG security text in the retained `-01-with-yang` artifact and consider adding NACM-specific language when the YANG augmentation is submitted.
 
 ## Remaining Open Questions
 
 The next human review should decide:
 
-- Should the YANG module remain in the protocol draft, or should it become `draft-abinabraham-vrrp-unicast-yang`?
+- Should the deferred YANG work return in a later revision of this protocol draft, or become `draft-abinabraham-vrrp-unicast-yang`?
 - Should unicast mode be explicitly limited to VRRPv3 in the YANG feature, or is the surrounding protocol text enough?
 - Should reviewers prefer a shorter leaf name later, the current recommendation is to keep `advertisement-mode` because it is explicit and follows IETF naming patterns such as `label-advertisement-mode`.
 - Should `unicast-mode-mismatch-error` be a virtual-router error only, or should there also be a global protocol error identity?
 - Should the draft keep the `Use Cases and Deployment Drivers` section, or collapse it into Scope and Applicability for concision?
 
+## Two AI Review Passes
+
+### Pass 1: Protocol and WG-Adoption Review
+
+The first AI review pass checked whether the main no-YANG -01 is ready to be read as a Standards Track update to RFC 9568.
+
+Result:
+
+- Confirmed that the draft is Standards Track and retains `updates="9568"`.
+- Confirmed that multicast mode remains the default and unicast mode is explicitly configured.
+- Confirmed that the draft is scoped to VRRPv3 and does not update VRRPv2.
+- Confirmed that the packet format, IP protocol number, state machine, Virtual Router MAC, and host-facing forwarding behavior remain unchanged.
+- Found and fixed one issue: the abstract still said the draft added "YANG data model extensions" after the no-YANG split. The abstract now says YANG augmentation is deferred until the VRRP YANG bis work is stable.
+
+### Pass 2: Process, Editorial, and Artifact Review
+
+The second AI review pass checked the document as a submission package and looked for stale text after the YANG split.
+
+Result:
+
+- Confirmed that the main -01 no longer embeds a YANG module or requests YANG-related IANA registrations.
+- Confirmed that `draft-ietf-rtgwg-vrrp-rfc8347bis-15` and RFC 8347 are informative references in the main no-YANG -01.
+- Found and fixed one consistency issue: the YANG deferral text now says "approved or published" consistently.
+- Confirmed that the YANG-inclusive `-01-with-yang` package is retained separately for later reuse.
+- Regenerated review diffs for the full -00 to -01 change, the YANG-inclusive to no-YANG split, and the focused two-pass review fixes.
+
 ## Generated Artifacts
 
-Generated from the proposed -01:
+Generated from the main no-YANG -01:
+
+- [draft-abinabraham-vrrp-unicast-01.xml](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01.xml)
+- [draft-abinabraham-vrrp-unicast-01.txt](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01.txt)
+- [draft-abinabraham-vrrp-unicast-01.html](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01.html)
+- [draft-abinabraham-vrrp-unicast-01.txt.html](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01.txt.html)
+- [draft-abinabraham-vrrp-unicast-01.idnits.txt](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01.idnits.txt)
+- [draft-abinabraham-vrrp-unicast-00-to-01.iddiff.html](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-00-to-01.iddiff.html)
+- [draft-abinabraham-vrrp-unicast-00-to-01.diff](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-00-to-01.diff)
+- [draft-abinabraham-vrrp-unicast-01-with-yang-to-01.iddiff.html](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01-with-yang-to-01.iddiff.html)
+- [draft-abinabraham-vrrp-unicast-01-with-yang-to-01.diff](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01-with-yang-to-01.diff)
+- [draft-abinabraham-vrrp-unicast-01.two-ai-reviews.iddiff.html](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01.two-ai-reviews.iddiff.html)
+- [draft-abinabraham-vrrp-unicast-01.two-ai-reviews.diff](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01.two-ai-reviews.diff)
+- [draft-abinabraham-vrrp-unicast-01.remove-changes-section.iddiff.html](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01.remove-changes-section.iddiff.html)
+- [draft-abinabraham-vrrp-unicast-01.remove-changes-section.diff](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01.remove-changes-section.diff)
+
+Retained YANG-inclusive working artifacts:
 
 - [draft-abinabraham-vrrp-unicast-01-with-yang.xml](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01-with-yang.xml)
 - [draft-abinabraham-vrrp-unicast-01-with-yang.txt](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01-with-yang.txt)
@@ -188,12 +232,18 @@ Generated from the proposed -01:
 - [draft-abinabraham-vrrp-unicast-00-to-01-with-yang.iddiff.html](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-00-to-01-with-yang.iddiff.html)
 - [draft-abinabraham-vrrp-unicast-01-with-yang.advertisement-mode.iddiff.html](/Users/addogra/Desktop/code-repos/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast-01-with-yang.advertisement-mode.iddiff.html)
 
-Validation summary:
+Validation summary for the main no-YANG -01:
+
+- `xmllint`: pass
+- `xml2rfc --text --html`: pass
+- `idnits`: boilerplate and checklist pass; remaining findings are local reference-status noise for RFC 9568, normal downref/status noise from the local idnits database, and an informative work-in-progress reference to `draft-ietf-rtgwg-vrrp-rfc8347bis`
+
+Validation summary for `-01-with-yang`:
 
 - `xmllint`: pass
 - `xml2rfc --text --html`: pass
 - `pyang`: pass against extracted `ietf-vrrp@2026-02-13.yang`
-- `idnits`: boilerplate and checklist pass; remaining findings include the expected naming warning for the local working name `draft-abinabraham-vrrp-unicast-01-with-yang`, local reference-status noise, and the expected normative dependency on `draft-ietf-rtgwg-vrrp-rfc8347bis` until that draft is published or handled by the WG
+- `idnits`: includes the expected naming warning because `draft-abinabraham-vrrp-unicast-01-with-yang` is a local working name and not a datatracker submission name ending in `-NN`
 
 ## Recommended WG Strategy
 
@@ -205,4 +255,4 @@ That story gives reviewers fewer places to push back. It also separates this wor
 
 ## Next Best Edit Before Submission
 
-Do one more human pass on whether to keep the YANG module inside the protocol draft. My recommendation is to keep it in -01 for now because it proves the management model is feasible and reviewable. If RTGWG prefers separation, split it after initial feedback.
+Submit or circulate the main no-YANG -01 first, using the YANG Considerations text to show that the management model has not been ignored. Keep `-01-with-yang` available as the candidate augmentation once `draft-ietf-rtgwg-vrrp-rfc8347bis` is approved or published.

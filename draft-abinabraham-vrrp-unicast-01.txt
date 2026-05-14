@@ -26,8 +26,9 @@ Abstract
    remains the default mode.  This document preserves the VRRP packet
    format, protocol number, virtual IP semantics, Virtual Router MAC
    behavior, and host-facing forwarding behavior defined in RFC 9568,
-   while adding explicit peer configuration, receive-side source
-   validation, and YANG data model extensions for unicast operation.
+   while adding explicit peer configuration and receive-side source
+   validation for unicast operation.  YANG data model augmentation is
+   deferred until the VRRP YANG bis work is stable.
 
 Status of This Memo
 
@@ -46,10 +47,9 @@ Status of This Memo
 
    This Internet-Draft will expire on 15 November 2026.
 
-Copyright Notice
 
-   Copyright (c) 2026 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
+
+
 
 
 
@@ -57,6 +57,11 @@ Dogra, et al.           Expires 15 November 2026                [Page 1]
 
 Internet-Draft                Unicast VRRP                      May 2026
 
+
+Copyright Notice
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
@@ -88,11 +93,10 @@ Table of Contents
    10. YANG Considerations . . . . . . . . . . . . . . . . . . . . .   8
    11. Security Considerations . . . . . . . . . . . . . . . . . . .   8
    12. IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
-   13. Changes from Version 00 . . . . . . . . . . . . . . . . . . .   9
-   14. References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     14.1.  Normative References . . . . . . . . . . . . . . . . . .   9
-     14.2.  Informative References . . . . . . . . . . . . . . . . .   9
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
+   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     13.1.  Normative References . . . . . . . . . . . . . . . . . .   9
+     13.2.  Informative References . . . . . . . . . . . . . . . . .   9
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   9
 
 1.  Introduction
 
@@ -102,10 +106,6 @@ Table of Contents
    virtual default gateway, but the environment does not provide usable
    multicast support for VRRP advertisements.
 
-   The primary deployment driver is the continued need for the classic
-   VRRPv3 function of protecting a virtual IPv4 or IPv6 first-hop
-   gateway in environments where multicast delivery is unavailable,
-   undesirable, or operationally constrained.  This includes
 
 
 
@@ -114,6 +114,10 @@ Dogra, et al.           Expires 15 November 2026                [Page 2]
 Internet-Draft                Unicast VRRP                      May 2026
 
 
+   The primary deployment driver is the continued need for the classic
+   VRRPv3 function of protecting a virtual IPv4 or IPv6 first-hop
+   gateway in environments where multicast delivery is unavailable,
+   undesirable, or operationally constrained.  This includes
    virtualized, cloud, overlay, and other deployments in which Virtual
    Routers still provide a common host-facing gateway service, but
    control traffic between the Virtual Routers is exchanged through
@@ -156,10 +160,6 @@ Internet-Draft                Unicast VRRP                      May 2026
    the scope of this specification.
 
    This document does not update VRRP Version 2.
-
-
-
-
 
 
 
@@ -414,10 +414,10 @@ Internet-Draft                Unicast VRRP                      May 2026
    This document does not define a YANG module.  The VRRP YANG data
    model is currently being revised by [I-D.ietf-rtgwg-vrrp-rfc8347bis],
    which is intended to obsolete [RFC8347].  Deferring the unicast VRRP
-   YANG augmentation until that work is approved allows the augmentation
-   to be based on the stable successor to [RFC8347], avoids unnecessary
-   churn against a moving base model, and helps ensure alignment with
-   the final VRRP YANG schema.
+   YANG augmentation until that work is approved or published allows the
+   augmentation to be based on the stable successor to [RFC8347], avoids
+   unnecessary churn against a moving base model, and helps ensure
+   alignment with the final VRRP YANG schema.
 
    A future revision of this document, or a companion YANG document, is
    expected to define the management model for configuring the VRRP
@@ -457,26 +457,9 @@ Internet-Draft                Unicast VRRP                      May 2026
 
    This document requests no IANA actions.
 
-13.  Changes from Version 00
+13.  References
 
-   This section is to be removed before publication as an RFC.
-
-   *  Changed the intended status from Informational to Standards Track.
-
-   *  Clarified that multicast mode remains the default mode.
-
-   *  Clarified that this document updates VRRPv3 and does not update
-      VRRPv2.
-
-   *  Added YANG considerations that defer YANG augmentation until
-      [I-D.ietf-rtgwg-vrrp-rfc8347bis] has been approved or published.
-
-   *  Removed implementation survey material from the protocol
-      specification body.
-
-14.  References
-
-14.1.  Normative References
+13.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -492,19 +475,7 @@ Internet-Draft                Unicast VRRP                      May 2026
               DOI 10.17487/RFC9568, April 2024,
               <https://www.rfc-editor.org/info/rfc9568>.
 
-14.2.  Informative References
-
-
-
-
-
-
-
-
-Dogra, et al.           Expires 15 November 2026                [Page 9]
-
-Internet-Draft                Unicast VRRP                      May 2026
-
+13.2.  Informative References
 
    [I-D.ietf-rtgwg-vrrp-rfc8347bis]
               Lindem, A., "A YANG Data Model for the Virtual Router
@@ -525,6 +496,15 @@ Internet-Draft                Unicast VRRP                      May 2026
               <https://www.rfc-editor.org/info/rfc8347>.
 
 Authors' Addresses
+
+
+
+
+
+Dogra, et al.           Expires 15 November 2026                [Page 9]
+
+Internet-Draft                Unicast VRRP                      May 2026
+
 
    Aditya Dogra
    Cisco Systems
@@ -551,6 +531,26 @@ Authors' Addresses
    Karnataka
    India
    Email: seshakri@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
