@@ -1,0 +1,6016 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Diff: draft-abinabraham-vrrp-unicast-00.txt - draft-abinabraham-vrrp-unicast-01-with-yang.txt</title>
+    <style>
+      body {font-family: monospace}
+      table {
+        border-spacing: 0;
+      }
+      td {
+        padding: 0;
+        white-space: pre;
+        vertical-align: top;
+        font-size: 0.86em;
+      }
+      th {
+        padding: 0;
+        text-align: center;
+      }
+      .left { background-color: #EEE; }
+      .right { background-color: #FFF; }
+      .lblock { background-color: #BFB; }
+      .rblock { background-color: #FF8; }
+      .delete { background-color: #ACF; }
+      .insert { background-color: #8FF; }
+      .change { background-color: gray; }
+      .header { background-color: orange; }
+      .w-delete {
+        color: #F00;
+        text-decoration: line-through;
+      }
+      .w-insert {
+        color: #008000;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+          <th class="header" scope="col">draft-abinabraham-vrrp-unicast-00.txt</th>
+          <td>&nbsp;</td>
+          <th class="header" scope="col">draft-abinabraham-vrrp-unicast-01-with-yang.txt</th>
+        </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">Network Working Group                                           A. Dogra
+</td>
+        <td>&nbsp;</td>
+        <td class="right">Network Working Group                                           A. Dogra
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">Internet-Draft                                                A. Abraham
+</td>
+        <td>&nbsp;</td>
+        <td class="right">Internet-Draft                                                A. Abraham
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">Updates: 9568 (if approved)                             S. Krishnamurthy
+</td>
+        <td>&nbsp;</td>
+        <td class="right">Updates: 9568 (if approved)                             S. Krishnamurthy
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">Intended status: <span class="delete">I</span>n<span class="delete">fo</span>r<span class="delete">m</span>a<span class="delete">tional  </span>                           Cisco Systems
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">Intended status: <span class="insert">Sta</span>n<span class="insert">da</span>r<span class="insert">ds Tr</span>a<span class="insert">ck</span>                           Cisco Systems
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">Expires: 1<span class="delete">3 Oct</span>ober 2026                                   1<span class="delete">1 April</span> 2026
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">Expires: 1<span class="insert">5 N</span>o<span class="insert">vem</span>ber 2026                                   <span class="insert"> </span>1<span class="insert">4 May</span> 2026
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Unicast Support for the Virtual Router Redundancy Protocol (VRRP)
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Unicast Support for the Virtual Router Redundancy Protocol (VRRP)
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">     </span>              draft-abinabraham-vrrp-unicast-0<span class="delete">0</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">              draft-abinabraham-vrrp-unicast-0<span class="insert">1-with-yang</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">Abstract
+</td>
+        <td>&nbsp;</td>
+        <td class="right">Abstract
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   The Virtual Router Redundancy Protocol (VRRP) is specified<span class="delete"> for</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   The Virtual Router Redundancy Protocol (VRRP) <span class="insert">Version 3 </span>is specified
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   multicast operation on a shared LAN in RFC 9568.  Some<span class="delete"> deployments,</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">  <span class="insert"> for</span> multicast operation on a shared LAN in RFC 9568.  Some
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   including virtualized and cloud environments, require VRRP-like
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   deployments require the VRRP first-hop redundancy function but cannot
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   first-hop redundancy but cannot use multicast delivery for VRRP
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   use multicast delivery for VRRP advertisements.  This document
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   advertisements.  This document updates RFC 9568 by defining an
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   updates RFC 9568 by defining an optional configured unicast mode for
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   optional unicast mode for VRRP.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   VRRP Version 3.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   In unicast mode, VRRP advertisements are sent to configured peer
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   In unicast mode, VRRP advertisements are sent to configured peer
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   addresses rather than to the VRRP multicast group.  <span class="delete">Th</span>is<span class="delete"> </span>d<span class="delete">ocum</span>e<span class="delete">nt</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   addresses rather than to the VRRP multicast group.  <span class="insert">Mult</span>i<span class="insert">ca</span>s<span class="insert">t mo</span>de
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   preserves the VRRP packet format, protocol number, virtual IP
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   remains the default mode.  This document preserves the VRRP packet
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   format, protocol number, virtual IP semantics, Virtual Router MAC
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   <span class="delete">s</span>e<span class="delete">m</span>a<span class="delete">nt</span>i<span class="delete">cs</span>, and host-facing forwarding behavior defined in RFC 9568,
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   <span class="insert">b</span>e<span class="insert">h</span>a<span class="insert">v</span>i<span class="insert">or</span>, and host-facing forwarding behavior defined in RFC 9568,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   while adding explicit peer configuration<span class="delete"> and</span> receive-side source
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   while adding explicit peer configuration<span class="insert">,</span> receive-side source
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   validation for unicast operation.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   validation, and YANG data model extensions for unicast operation.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">Status of This Memo
+</td>
+        <td>&nbsp;</td>
+        <td class="right">Status of This Memo
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   This Internet-Draft is submitted in full conformance with the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   This Internet-Draft is submitted in full conformance with the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   provisions of BCP 78 and BCP 79.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   provisions of BCP 78 and BCP 79.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Internet-Drafts are working documents of the Internet Engineering
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Internet-Drafts are working documents of the Internet Engineering
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Task Force (IETF).  Note that other groups may also distribute
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Task Force (IETF).  Note that other groups may also distribute
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   working documents as Internet-Drafts.  The list of current Internet-
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   working documents as Internet-Drafts.  The list of current Internet-
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Drafts is at https://datatracker.ietf.org/drafts/current/.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Drafts is at https://datatracker.ietf.org/drafts/current/.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Internet-Drafts are draft documents valid for a maximum of six months
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Internet-Drafts are draft documents valid for a maximum of six months
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   and may be updated, replaced, or obsoleted by other documents at any
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   and may be updated, replaced, or obsoleted by other documents at any
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   time.  It is inappropriate to use Internet-Drafts as reference
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   time.  It is inappropriate to use Internet-Drafts as reference
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   material or to cite them other than as &quot;work in progress.&quot;
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   material or to cite them other than as &quot;work in progress.&quot;
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   This Internet-Draft will expire on 1<span class="delete">3 Oct</span>ober 2026.
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   This Internet-Draft will expire on 1<span class="insert">5 N</span>o<span class="insert">vem</span>ber 2026.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">Copyright Notice
+</td>
+        <td>&nbsp;</td>
+        <td class="right">Copyright Notice
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Copyright (c) 2026 IETF Trust and the persons identified as the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Copyright (c) 2026 IETF Trust and the persons identified as the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   document authors.  All rights reserved.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   document authors.  All rights reserved.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   This document is subject to BCP 78 and the IETF Trust&#x27;s Legal
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   This document is subject to BCP 78 and the IETF Trust&#x27;s Legal
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   license-info) in effect on the date of publication of this document.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   license-info) in effect on the date of publication of this document.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="right">&nbsp;</td>
+      </tr>
+      <tr id="context-0">
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-0">
+           <small>Skipping</small>
+          </a>
+        </th>
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-0">
+           <small>Skipping</small>
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   described in Section 4.e of the Trust Legal Provisions and are
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   described in Section 4.e of the Trust Legal Provisions and are
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   provided without warranty as described in the Revised BSD License.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   provided without warranty as described in the Revised BSD License.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">Table of Contents
+</td>
+        <td>&nbsp;</td>
+        <td class="right">Table of Contents
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   2.  Requirements Language . . . . . . . . . . . . . . . . . . . .   3
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   2.  Requirements Language . . . . . . . . . . . . . . . . . . . .   3
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   3.  Scope and Applicability . . . . . . . . . . . . . . . . . . .   3
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   3.  Scope and Applicability . . . . . . . . . . . . . . . . . . .   3
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   4.  Use Cases and Deployment Drivers  . . . . . . . . . . . . . .   <span class="delete">3</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   4.  Use Cases and Deployment Drivers  . . . . . . . . . . . . . .   <span class="insert">4</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   5.  Additional Definitions  . . . . . . . . . . . . . . . . . . .   4
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   5.  Additional Definitions  . . . . . . . . . . . . . . . . . . .   4
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   6.  Unicast VRRP Overview . . . . . . . . . . . . . . . . . . . .   <span class="delete">4</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   6.  Unicast VRRP Overview . . . . . . . . . . . . . . . . . . . .   <span class="insert">5</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   7.  Peer Configuration  . . . . . . . . . . . . . . . . . . . . .   5
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   7.  Peer Configuration  . . . . . . . . . . . . . . . . . . . . .   5
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   8.  Updates to RFC 9568 . . . . . . . . . . . . . . . . . . . . .   <span class="delete">5</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   8.  Updates to RFC 9568 . . . . . . . . . . . . . . . . . . . . .   <span class="insert">6</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">     8.1.  VRRP Overview . . . . . . . . . . . . . . . . . . . . . .   <span class="delete">5</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">     8.1.  VRRP Overview . . . . . . . . . . . . . . . . . . . . . .   <span class="insert">6</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">     8.2.  Protocol Processing . . . . . . . . . . . . . . . . . . .   6
+</td>
+        <td>&nbsp;</td>
+        <td class="right">     8.2.  Protocol Processing . . . . . . . . . . . . . . . . . . .   6
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">     8.3.  IPv4 Field Descriptions . . . . . . . . . . . . . . . . .   6
+</td>
+        <td>&nbsp;</td>
+        <td class="right">     8.3.  IPv4 Field Descriptions . . . . . . . . . . . . . . . . .   6
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">     8.4.  IPv6 Field Descriptions . . . . . . . . . . . . . . . . .   6
+</td>
+        <td>&nbsp;</td>
+        <td class="right">     8.4.  IPv6 Field Descriptions . . . . . . . . . . . . . . . . .   6
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">     8.5.  Transmitting VRRP Packets . . . . . . . . . . . . . . . .   <span class="delete">6</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">     8.5.  Transmitting VRRP Packets . . . . . . . . . . . . . . . .   <span class="insert">7</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">     8.6.  Receiving VRRP Packets  . . . . . . . . . . . . . . . . .   7
+</td>
+        <td>&nbsp;</td>
+        <td class="right">     8.6.  Receiving VRRP Packets  . . . . . . . . . . . . . . . . .   7
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">     8.7.  Host-Facing Behavior  . . . . . . . . . . . . . . . . . .   7
+</td>
+        <td>&nbsp;</td>
+        <td class="right">     8.7.  Host-Facing Behavior  . . . . . . . . . . . . . . . . . .   7
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   9.  Operational Considerations  . . . . . . . . . . . . . . . . .   <span class="delete">7</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   9.  Operational Considerations  . . . . . . . . . . . . . . . . .   <span class="insert">8</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   10. <span class="delete">Implemen</span>ta<span class="delete">ti</span>o<span class="delete">n Status</span> . . . . . . . . . . . . . . . . . . . .   8
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   10. <span class="insert">YANG Da</span>ta<span class="insert"> M</span>o<span class="insert">del</span> . . . . . . . . . . . . . . . . . . . .<span class="insert"> . . .</span>   8
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   11. Security Considerations . . . . . . . . . . . . . . . . . . .  1<span class="delete">0</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   11. Security Considerations . . . . . . . . . . . . . . . . . . .  1<span class="insert">3</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   12. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  1<span class="delete">0</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   12. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  1<span class="insert">4</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   13. Changes from Version 00 . . . . . . . . . . . . . . . . . . .  14
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   1<span class="delete">3</span>. References  . . . . . . . . . . . . . . . . . . . . . . . . .  1<span class="delete">0</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   1<span class="insert">4</span>. References  . . . . . . . . . . . . . . . . . . . . . . . . .  1<span class="insert">5</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">     1<span class="delete">3</span>.1.  Normative References . . . . . . . . . . . . . . . . . .  1<span class="delete">0</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">     1<span class="insert">4</span>.1.  Normative References . . . . . . . . . . . . . . . . . .  1<span class="insert">5</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">     1<span class="delete">3</span>.2.  Informative References . . . . . . . . . . . . . . . . .  1<span class="delete">0</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">     1<span class="insert">4</span>.2.  Informative References . . . . . . . . . . . . . . . . .  1<span class="insert">6</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   Authors&#x27; Addresses  . . . . . . . . . . . . . . . . . . . . . . .  1<span class="delete">2</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   Authors&#x27; Addresses  . . . . . . . . . . . . . . . . . . . . . . .  1<span class="insert">6</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">1.  Introduction
+</td>
+        <td>&nbsp;</td>
+        <td class="right">1.  Introduction
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   [RFC9568] specifies VRRP for IPv4 and IPv6 and assumes<span class="delete"> multicast</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   [RFC9568] specifies VRRP <span class="insert">Version 3 </span>for IPv4 and IPv6 and assumes
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   operation on a shared LAN.  In a number of<span class="delete"> modern</span> deployments,
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">  <span class="insert"> multicast</span> operation on a shared LAN.  In a number of deployments,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   redundant routers still need fast active/backup failover for a
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   redundant routers still need fast active/backup failover for a
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   virtual default gateway, but the environment does not provide usable
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   virtual default gateway, but the environment does not provide usable
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   multicast support for VRRP advertisements.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   multicast support for VRRP advertisements.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   The primary deployment driver is the continued need for the classic
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   The primary deployment driver is the continued need for the classic
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   VRRP function of protecting a virtual IPv4 or IPv6 first-hop<span class="delete"> gateway</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   VRRP<span class="insert">v3</span> function of protecting a virtual IPv4 or IPv6 first-hop
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   in environments where multicast delivery is unavailable,<span class="delete"> undesirable,</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">  <span class="insert"> gateway</span> in environments where multicast delivery is unavailable,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   or operationally constrained.  This includes virtualized, cloud,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   undesirable, or operationally constrained.  This includes
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   overlay, and other deployments in which Virtual Routers still provide
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   virtualized, cloud, overlay, and other deployments in which Virtual
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   a common host-facing gateway service, but control traffic between the
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Routers still provide a common host-facing gateway service, but
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   Virtual Routers is exchanged through explicit peer connectivity
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   control traffic between the Virtual Routers is exchanged through
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   instead of a simple multicast-capable LAN.
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">  <span class="insert"> explicit peer connectivity</span> instead of a simple multicast-capable LAN.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   The intended use case for this document is not a generic active/
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   The intended use case for this document is not a generic active/
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   backup role-election mechanism.  Rather, it is a narrow extension of
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   backup role-election mechanism.  Rather, it is a narrow extension of
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   VRRP for deployments that want to preserve the familiar VRRP state
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   VRRP<span class="insert">v3</span> for deployments that want to preserve the familiar VRRP state
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   machine, protocol number, virtual IP address semantics, Virtual
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   machine, protocol number, virtual IP address semantics, Virtual
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   Router MAC behavior, and host-facing forwarding model while <span class="delete">replac</span>ing
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   Router MAC behavior, and host-facing forwarding model while <span class="insert">us</span>ing<span class="insert"> a</span>
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   only the advertisement delivery method.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   different advertisement mode.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">2.  Requirements Language
+</td>
+        <td>&nbsp;</td>
+        <td class="right">2.  Requirements Language
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;NOT RECOMMENDED&quot;, &quot;MAY&quot;, and
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;NOT RECOMMENDED&quot;, &quot;MAY&quot;, and
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   &quot;OPTIONAL&quot; in this document are to be interpreted as described in BCP
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   &quot;OPTIONAL&quot; in this document are to be interpreted as described in BCP
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   capitals, as shown here.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   capitals, as shown here.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">3.  Scope and Applicability
+</td>
+        <td>&nbsp;</td>
+        <td class="right">3.  Scope and Applicability
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   This document updates [RFC9568] by defining an optional u<span class="delete">nicast mo</span>d<span class="delete">e</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   This document updates [RFC9568] by defining an optional <span class="insert">config</span>u<span class="insert">re</span>d
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   unicast mode of operation for VRRPv3.  Multicast mode remains the
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   of operation<span class="delete"> for VRRP</span>.  The unicast mode is intended for<span class="delete"> deployments</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">  <span class="insert"> default mode</span> of operation.  The unicast mode is intended for
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   that still want the classic VRRP model of a Virtual<span class="delete"> Router protecting</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">  <span class="insert"> deployments</span> that still want the classic VRRP model of a Virtual
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   one or more virtual IPv4 or IPv6 addresses, but that cannot rely on
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Router protecting one or more virtual IPv4 or IPv6 addresses, but
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   multicast delivery of advertisements.
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">  <span class="insert"> that cannot rely on</span> multicast delivery of advertisements.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   The unicast mode defined here is limited to deployments in which the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   The unicast mode defined here is limited to deployments in which the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   participating VRRP Routers can exchange advertisements without
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   participating VRRP Routers can exchange advertisements without
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   traversing a router that decrements the IPv4 TTL or IPv6 Hop Limit.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   traversing a router that decrements the IPv4 TTL or IPv6 Hop Limit.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   This preserves the receive-side validation model of [RFC9568] and
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   This preserves the receive-side validation model of [RFC9568] and
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   keeps the security and topology assumptions close to those of the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   keeps the security and topology assumptions close to those of the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   base protocol.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   base protocol.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   This document does not define multi-hop operation.  If a deployment
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   This document does not define multi-hop operation.  If a deployment
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   requires routed multi-hop active/backup election or transport
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   requires routed multi-hop active/backup election or transport
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   encapsulation other than IP protocol 112, that deployment is outside
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   encapsulation other than IP protocol 112, that deployment is outside
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   the scope of this specification.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   the scope of this specification.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   This document does not update VRRP Version 2.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">4.  Use Cases and Deployment Drivers
+</td>
+        <td>&nbsp;</td>
+        <td class="right">4.  Use Cases and Deployment Drivers
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   The operational motivation for unicast VRRP is straightforward:
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   The operational motivation for unicast VRRP is straightforward:
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   operators still need the classic VRRP function of protecting a
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   operators still need the classic VRRP function of protecting a
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   virtual IPv4 or IPv6 default gateway, but some modern deployments
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   virtual IPv4 or IPv6 default gateway, but some modern deployments
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   cannot rely on multicast delivery for VRRP advertisements.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   cannot rely on multicast delivery for VRRP advertisements.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Typical use cases include:
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Typical use cases include:
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   1.  Cloud and virtualized environments in which multicast is not
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   1.  Cloud and virtualized environments in which multicast is not
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">       available or is not exposed in a way that is operationally
+</td>
+        <td>&nbsp;</td>
+        <td class="right">       available or is not exposed in a way that is operationally
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">       equivalent to a simple shared LAN.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">       equivalent to a simple shared LAN.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   2.  Overlay or virtualized edge deployments in which the protected
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   2.  Overlay or virtualized edge deployments in which the protected
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">       routers still present a common host-facing gateway service, but
+</td>
+        <td>&nbsp;</td>
+        <td class="right">       routers still present a common host-facing gateway service, but
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">       the control traffic between the routers is exchanged using
+</td>
+        <td>&nbsp;</td>
+        <td class="right">       the control traffic between the routers is exchanged using
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">       explicit peer connectivity rather than a multicast-capable LAN.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">       explicit peer connectivity rather than a multicast-capable LAN.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   3.  Service-provider and data-center designs in which operators want
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   3.  Service-provider and data-center designs in which operators want
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">       to preserve the familiar VRRP packet format, state machine, and
+</td>
+        <td>&nbsp;</td>
+        <td class="right">       to preserve the familiar VRRP packet format, state machine, and
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">       virtual IP semantics of [RFC9568] while <span class="delete">replac</span>ing <span class="delete">o</span>n<span class="delete">ly </span>t<span class="delete">he</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">       virtual IP semantics of [RFC9568] while <span class="insert">us</span>ing <span class="insert">a differe</span>nt
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">       advertisement de<span class="delete">livery method</span>.
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">       advertisement <span class="insert">mo</span>de.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   This document addresses those use cases by defining a unicast
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   This document addresses those use cases by defining a unicast
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   d<span class="delete">eli</span>ver<span class="delete">y</span> mode that stays close to the original VRRP model.  It<span class="delete"> does</span>
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">   <span class="insert">a</span>dver<span class="insert">tisement</span> mode that stays close to the original VRRP model.  It
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">   not attempt to standardize broader routed active/backup election
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">  <span class="insert"> does</span> not attempt to standardize broader routed active/backup election
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   mechanisms that are no longer centered on protecting a virtual first-
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   mechanisms that are no longer centered on protecting a virtual first-
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   hop gateway.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   hop gateway.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">5.  Additional Definitions
+</td>
+        <td>&nbsp;</td>
+        <td class="right">5.  Additional Definitions
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Unicast Mode            A mode of VRRP operation in which
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Unicast Mode            A mode of VRRP operation in which
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">                           advertisements for a Virtual Router are sent
+</td>
+        <td>&nbsp;</td>
+        <td class="right">                           advertisements for a Virtual Router are sent
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">                           as unicast IPv4 or IPv6 packets to configured
+</td>
+        <td>&nbsp;</td>
+        <td class="right">                           as unicast IPv4 or IPv6 packets to configured
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="right">&nbsp;</td>
+      </tr>
+      <tr id="context-1">
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-1">
+           <small>Skipping</small>
+          </a>
+        </th>
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-1">
+           <small>Skipping</small>
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Unicast Peer            A configured VRRP Router participating in the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Unicast Peer            A configured VRRP Router participating in the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">                           same Virtual Router and address family whose
+</td>
+        <td>&nbsp;</td>
+        <td class="right">                           same Virtual Router and address family whose
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">                           address is used as a permitted source and
+</td>
+        <td>&nbsp;</td>
+        <td class="right">                           address is used as a permitted source and
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">                           destination for unicast VRRP advertisements.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">                           destination for unicast VRRP advertisements.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Unicast Peer List       The configured set of all other VRRP Routers
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Unicast Peer List       The configured set of all other VRRP Routers
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">                           that participate in a unicast-mode Virtual
+</td>
+        <td>&nbsp;</td>
+        <td class="right">                           that participate in a unicast-mode Virtual
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">                           Router for a given address family.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">                           Router for a given address family.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">6.  Unicast VRRP Overview
+</td>
+        <td>&nbsp;</td>
+        <td class="right">6.  Unicast VRRP Overview
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   A Virtual Router defined by this document operates in exactly one of
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   A Virtual Router defined by this document operates in exactly one of
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   two modes:
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   two advertisement modes:
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   *  multicast mode, as specified in [RFC9568], or
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   *  multicast mode, as specified in [RFC9568], or
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   *  unicast mode, as specified in this document.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   *  unicast mode, as specified in this document.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Multicast mode is the default mode.  A VRRP Router MUST use multicast
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   mode unless unicast mode is explicitly configured for the Virtual
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Router.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   A VRRP Router operating a given Virtual Router in unicast mode MUST
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   A VRRP Router operating a given Virtual Router in unicast mode MUST
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   NOT send VRRP advertisements for that Virtual Router to the VRRP
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   NOT send VRRP advertisements for that Virtual Router to the VRRP
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   multicast destination address.  Instead, it MUST send a copy of each
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   multicast destination address.  Instead, it MUST send a copy of each
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   advertisement to each address in the configured Unicast Peer List.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   advertisement to each address in the configured Unicast Peer List.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Except as updated by this document, the VRRP packet format, VRRP
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Except as updated by this document, the VRRP packet format, VRRP
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   state machine, timer calculations, preemption behavior, Virtual
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   state machine, timer calculations, preemption behavior, Virtual
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Router semantics, virtual IP address behavior, and host-facing
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Router semantics, virtual IP address behavior, and host-facing
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="right">&nbsp;</td>
+      </tr>
+      <tr id="context-2">
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-2">
+           <small>Skipping</small>
+          </a>
+        </th>
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-2">
+           <small>Skipping</small>
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   address that the receiving peer uses as the source address for VRRP
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   address that the receiving peer uses as the source address for VRRP
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   advertisements, as described in Section 8.3.  For IPv6 operation,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   advertisements, as described in Section 8.3.  For IPv6 operation,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   each configured peer address MUST be an IPv6 link-local address used
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   each configured peer address MUST be an IPv6 link-local address used
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   by the receiving peer as the source address for VRRP advertisements,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   by the receiving peer as the source address for VRRP advertisements,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   as described in Section 8.4.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   as described in Section 8.4.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   The local router&#x27;s own address MUST NOT appear in its Unicast Peer
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   The local router&#x27;s own address MUST NOT appear in its Unicast Peer
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   List.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   List.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">8.  Updates to RFC 9568
+</td>
+        <td>&nbsp;</td>
+        <td class="right">8.  Updates to RFC 9568
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">8.1.  VRRP Overview
+</td>
+        <td>&nbsp;</td>
+        <td class="right">8.1.  VRRP Overview
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   The references to multicast-only operation in Section 3 of [RFC9568]
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   The references to multicast-only operation in Section 3 of [RFC9568]
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   are updated to allow an advertisement to be delivered either to the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   are updated to allow an advertisement to be delivered either to the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   VRRP multicast destination address, as specified in [RFC9568], or to
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   VRRP multicast destination address, as specified in [RFC9568], or to
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   configured Unicast Peers, as specified in this document.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   configured Unicast Peers, as specified in this document.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">8.2.  Protocol Processing
+</td>
+        <td>&nbsp;</td>
+        <td class="right">8.2.  Protocol Processing
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Section 5 of [RFC9568] is updated so that a Virtual Router operating
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Section 5 of [RFC9568] is updated so that a Virtual Router operating
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   in unicast mode sends and receives VRRP advertisements only through
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   in unicast mode sends and receives VRRP advertisements only through
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   the configured Unicast Peer List for that Virtual Router and address
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   the configured Unicast Peer List for that Virtual Router and address
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   family.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   family.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">8.3.  IPv4 Field Descriptions
+</td>
+        <td>&nbsp;</td>
+        <td class="right">8.3.  IPv4 Field Descriptions
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="right">&nbsp;</td>
+      </tr>
+      <tr id="context-3">
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-3">
+           <small>Skipping</small>
+          </a>
+        </th>
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-3">
+           <small>Skipping</small>
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">       sending interface, as specified in [RFC9568].
+</td>
+        <td>&nbsp;</td>
+        <td class="right">       sending interface, as specified in [RFC9568].
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   2.  The IPv6 destination address MUST be the configured IPv6 link-
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   2.  The IPv6 destination address MUST be the configured IPv6 link-
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">       local address of the Unicast Peer to which the copy of the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">       local address of the Unicast Peer to which the copy of the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">       advertisement is being sent.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">       advertisement is being sent.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   3.  The IPv6 Hop Limit MUST be set to 255, and a received packet
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   3.  The IPv6 Hop Limit MUST be set to 255, and a received packet
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">       whose Hop Limit is not 255 MUST be discarded.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">       whose Hop Limit is not 255 MUST be discarded.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   4.  The IPv6 Next Header field MUST remain 112.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   4.  The IPv6 Next Header field MUST remain 112.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">8.5.  Transmitting VRRP Packets
+</td>
+        <td>&nbsp;</td>
+        <td class="right">8.5.  Transmitting VRRP Packets
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Section 7.2 of [RFC9568] is updated so that a VRRP Router operating a
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Section 7.2 of [RFC9568] is updated so that a VRRP Router operating a
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Virtual Router in unicast mode sends one copy of each VRRP
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Virtual Router in unicast mode sends one copy of each VRRP
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   advertisement to each configured Unicast Peer instead of sending the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   advertisement to each configured Unicast Peer instead of sending the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   advertisement to the VRRP multicast group.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   advertisement to the VRRP multicast group.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Other than the destination address, the packet contents MUST be the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Other than the destination address, the packet contents MUST be the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   same for each transmitted copy.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   same for each transmitted copy.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">8.6.  Receiving VRRP Packets
+</td>
+        <td>&nbsp;</td>
+        <td class="right">8.6.  Receiving VRRP Packets
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   A VRRP Router operating a Virtual Router in unicast mode MUST process
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   A VRRP Router operating a Virtual Router in unicast mode MUST process
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   only advertisements whose source address matches an address in the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   only advertisements whose source address matches an address in the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   configured Unicast Peer List for that Virtual Router and address
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   configured Unicast Peer List for that Virtual Router and address
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="right">&nbsp;</td>
+      </tr>
+      <tr id="context-4">
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-4">
+           <small>Skipping</small>
+          </a>
+        </th>
+        <td></td>
+        <th class="change" scope="col">
+          <a href="#context-4">
+           <small>Skipping</small>
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   *  the packet is received for the wrong address family, or
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   *  the packet is received for the wrong address family, or
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   *  the packet is otherwise invalid according to [RFC9568].
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   *  the packet is otherwise invalid according to [RFC9568].
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   A VRRP Router operating a Virtual Router in unicast mode MUST ignore
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   A VRRP Router operating a Virtual Router in unicast mode MUST ignore
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   VRRP advertisements for that same Virtual Router received through
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   VRRP advertisements for that same Virtual Router received through
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   multicast delivery.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   multicast delivery.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   A VRRP Router operating a Virtual Router in multicast mode MUST
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   ignore unicast VRRP advertisements for that same Virtual Router.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">8.7.  Host-Facing Behavior
+</td>
+        <td>&nbsp;</td>
+        <td class="right">8.7.  Host-Facing Behavior
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   This document changes only advertisement delivery.  The Active
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   This document changes only advertisement delivery.  The Active
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Router&#x27;s behavior with respect to the Virtual Router MAC address,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Router&#x27;s behavior with respect to the Virtual Router MAC address,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   ARP, gratuitous ARP, IPv6 Neighbor Discovery, Router Advertisements,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   ARP, gratuitous ARP, IPv6 Neighbor Discovery, Router Advertisements,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Unsolicited Neighbor Advertisements, and forwarding responsibility
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Unsolicited Neighbor Advertisements, and forwarding responsibility
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   remains as specified in [RFC9568].
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   remains as specified in [RFC9568].
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   In particular, unicast mode does not replace the Virtual Router MAC
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   In particular, unicast mode does not replace the Virtual Router MAC
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   with a multicast MAC.  The Virtual Router MAC remains the well-known
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   with a multicast MAC.  The Virtual Router MAC remains the well-known
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   unicast VRRP MAC associated with the VRID, as specified in [RFC9568].
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   unicast VRRP MAC associated with the VRID, as specified in [RFC9568].
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">9.  Operational Considerations
+</td>
+        <td>&nbsp;</td>
+        <td class="right">9.  Operational Considerations
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   A deployment using unicast mode SHOULD ensure that all routers in a
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   A deployment using unicast mode SHOULD ensure that all routers in a
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   given Virtual Router are configured with a consistent peer inventory.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   given Virtual Router are configured with a consistent peer inventory.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Inconsistent peer lists can create asymmetric reachability and can
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Inconsistent peer lists can create asymmetric reachability and can
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   lead to multiple routers independently deciding that the Active
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   lead to multiple routers independently deciding that the Active
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Router has failed.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Router has failed.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   A deployment using unicast mode SHOULD continue to use distinct
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   A deployment using unicast mode SHOULD continue to use distinct
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   priority values as recommended in [RFC9568] so that Backup Routers do
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   priority values as recommended in [RFC9568] so that Backup Routers do
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   not transition to Active state simultaneously after a failure.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   not transition to Active state simultaneously after a failure.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   This document does not update the VRRP management model.  Future work
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   may standardize YANG or other management objects for peer lists,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   source validation policy, and related unicast-mode configuration.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">10.  Implementation Status
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Section 10 defines YANG data model extensions for unicast-mode
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   configuration and operational state.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   This section records publicly documented implementation experience
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">10.  YANG Data Model
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   for the benefit of reviewers.  It is not part of the protocol
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   specification.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   Public documentation reviewed by the authors shows that unicast VRRP
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   This section defines a YANG module that augments the VRRP YANG model
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   support already exists in multiple products and open-source
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   defined in [I-D.ietf-rtgwg-vrrp-rfc8347bis].  The module adds the
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   implementations, although not all of them match the protocol profile
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   minimum configuration and state needed to represent the unicast mode
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   defined in this document.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   defined in this document.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   One implementation detail that varies across products is the
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   The module is written using YANG 1.1 [RFC7950] and augments the
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   interaction between unicast advertisement delivery and Virtual Router
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   interface and IP trees defined by [RFC8343] and [RFC8344].  It uses
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   MAC behavior.  Implementations that remain close to classic VRRP tend
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   the common YANG data types defined by [RFC9911].
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   to preserve the standard unicast Virtual Router MAC and change only
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   the control-packet delivery method, while more divergent &quot;unicast
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   VRRP&quot; modes move away from the classic virtual-gateway and neighbor
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   handling model.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   +================+============+====================================+
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   The module adds a per-instance advertisement mode.  The default value
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   | Implementation | Support    | Notes                              |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   is multicast.  When the value is unicast, at least one unicast peer
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                | status     |                                    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   is required.  Separate IPv4 and IPv6 augments are used so that peer
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   +================+============+====================================+
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   addresses can follow the address-family-specific protocol rules.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   | Cisco IOS XR   | Documented | Documents a unicast peer model     |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | that preserves VRRP first-hop      |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | redundancy semantics; published    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | operational output still shows the |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | standard VRRP Virtual MAC while    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | unicast transport is enabled,      |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | indicating that only advertisement |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | delivery changes [CISCO-XR-VRRP]   |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   +----------------+------------+------------------------------------+
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   | Keepalived     | Documented | Documents unicast peers, source    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | validation, and TTL controls;      |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | documentation and reviewed source  |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | show that VMAC behavior remains    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | available, but that vmac_xmit_base |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | is required when VMAC is combined  |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | with unicast peers [KEEPALIVED]    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | [KEEPALIVED-SRC]                   |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   +----------------+------------+------------------------------------+
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   | VyOS           | Documented | Documents peer-based unicast VRRP  |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | configuration and a separate       |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | rfc3768-compatibility mode that    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | creates a VRRP interface and       |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | assigns the virtual MAC and        |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | virtual IP, illustrating that      |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | classic VRRP VMAC behavior is a    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | compatibility choice in some       |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | unicast deployments [VYOS-HA]      |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   +----------------+------------+------------------------------------+
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   | Huawei VRP     | Documented | Documents a proprietary            |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | VRRPv2-based unicast mode,         |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | including configurable transport   |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | details, that is related to but    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | broader than the scoped profile in |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | this document [HUAWEI-UC-VRRP]     |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | [HUAWEI-UC-VRRP-PORT]              |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   +----------------+------------+------------------------------------+
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   | Juniper Cloud- | Documented | Documents unicast VRRP use in      |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   | Native Router  |            | cloud workflows and route-table    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | ownership scenarios, illustrating  |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | deployment demand in cloud         |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | environments [JUNIPER-CNR-VRRP]    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | [JUNIPER-CNR-EKS]                  |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   +----------------+------------+------------------------------------+
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   | MikroTik       | No public  | Public documentation reviewed by   |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   | RouterOS       | unicast    | the authors remains aligned with   |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                | support    | multicast VRRP behavior            |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                | found      | [MIKROTIK-VRRP]                    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   +----------------+------------+------------------------------------+
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   | FRRouting      | No public  | Public documentation reviewed by   |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                | unicast    | the authors describes VRRPv2 and   |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                | support    | VRRPv3 behavior with the standard  |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                | found      | RFC Virtual MAC and multicast      |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | advertisements; reviewed source    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | code likewise remains aligned with |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | the classic multicast model and    |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | does not show a unicast mode       |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   |                |            | [FRR-VRRP] [FRR-SRC]               |
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   +----------------+------------+------------------------------------+
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">      Table 1: Examples of publicly documented unicast VRRP support
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   The following tree diagram summarizes the new data nodes:
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   module: ietf-vrrp-unicast
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     augment /if:interfaces/if:interface/ip:ipv4/vrrp:vrrp/
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">               vrrp:vrrp-instance:
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       +--rw advertisement-mode? vrrp-advertisement-mode {unicast-vrrp}?
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       +--rw unicast {unicast-vrrp}?
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       |  +--rw peer* [address]
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       |     +--rw address         inet:ipv4-address
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       +--ro unicast-statistics {unicast-vrrp}?
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          +--ro peer-source-errors?   yang:counter64
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          +--ro mode-mismatch-errors? yang:counter64
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     augment /if:interfaces/if:interface/ip:ipv6/vrrp:vrrp/
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">               vrrp:vrrp-instance:
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       +--rw advertisement-mode? vrrp-advertisement-mode {unicast-vrrp}?
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       +--rw unicast {unicast-vrrp}?
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       |  +--rw peer* [address]
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       |     +--rw address         inet:ipv6-address
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       +--ro unicast-statistics {unicast-vrrp}?
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          +--ro peer-source-errors?   yang:counter64
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          +--ro mode-mismatch-errors? yang:counter64
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   The reviewed material also suggests that the MAC-related differences
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   &lt;CODE BEGINS&gt; file &quot;ietf-vrrp-unicast@2026-05-14.yang&quot;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   are not about changing the VRRP Virtual Router MAC into a multicast
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   module ietf-vrrp-unicast {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   MAC.  Instead, the main implementation differences are whether a
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     yang-version 1.1;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   given product preserves the classic VRRP virtual-gateway model at
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     namespace &quot;urn:ietf:params:xml:ns:yang:ietf-vrrp-unicast&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   all, and, if it does, whether unicast advertisements are sent on the
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     prefix vrrp-ucast;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   same logical interface that owns the virtual MAC or on the base
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   interface beneath it.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     import ietf-inet-types {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   The existence of multiple deployed implementations supports the case
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       prefix inet;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   for standardization.  At the same time, the documented differences
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       reference
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   across implementations show why this document intentionally
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;RFC 9911: Common YANG Data Types, Section 4&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   standardizes only a narrow unicast mode that remains close to
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [RFC9568].
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     import ietf-yang-types {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       prefix yang;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       reference
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;RFC 9911: Common YANG Data Types, Section 3&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     import ietf-interfaces {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       prefix if;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       reference
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;RFC 8343: A YANG Data Model for Interface Management&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     import ietf-ip {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       prefix ip;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       reference
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;RFC 8344: A YANG Data Model for IP Management&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     import ietf-vrrp {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       prefix vrrp;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       reference
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;RFC XXXX: A YANG Data Model for the Virtual Router
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          Redundancy Protocol (VRRP)&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     organization
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       &quot;IETF Routing Area Working Group (RTGWG)&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     contact
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       &quot;WG Web:   &lt;https://datatracker.ietf.org/wg/rtgwg/&gt;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        WG List:  &lt;mailto:rtgwg@ietf.org&gt;&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       &quot;This YANG module augments the VRRP YANG data model with
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        configuration and operational state for unicast VRRP.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        Copyright (c) 2026 IETF Trust and the persons identified as
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        authors of the code.  All rights reserved.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        Redistribution and use in source and binary forms, with or
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        without modification, is permitted pursuant to, and subject to
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        the license terms contained in, the Revised BSD License set
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        forth in Section 4.c of the IETF Trust&#x27;s Legal Provisions
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        Relating to IETF Documents
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        (https://trustee.ietf.org/license-info).
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        This version of this YANG module is part of RFC XXXX; see
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">        the RFC itself for full legal notices.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     revision 2026-05-14 {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;Initial revision.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       reference
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;RFC XXXX: Unicast Support for the Virtual Router
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          Redundancy Protocol (VRRP)&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     feature unicast-vrrp {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;Support for the unicast VRRP advertisement mode.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       reference
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;RFC XXXX: Unicast Support for the Virtual Router
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          Redundancy Protocol (VRRP)&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     typedef vrrp-advertisement-mode {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       type enumeration {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         enum multicast {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             &quot;VRRP advertisements are sent to the VRRP multicast
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              destination address.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         enum unicast {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             &quot;VRRP advertisements are sent to configured
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              unicast peers.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;VRRP advertisement mode.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     identity unicast-peer-source-error {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       base vrrp:vrrp-error-virtual-router;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;A unicast-mode VRRP packet was received from a source address
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          that is not configured as a unicast peer.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     identity unicast-mode-mismatch-error {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       base vrrp:vrrp-error-virtual-router;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;A VRRP packet was received using an advertisement mode that
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          does not match the configured mode for the virtual router.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     grouping unicast-common {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;Common unicast VRRP configuration and state.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       leaf advertisement-mode {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         if-feature &quot;unicast-vrrp&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         type vrrp-advertisement-mode;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         default &quot;multicast&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         must &quot;. = &#x27;multicast&#x27; or count(../unicast/peer) &gt; 0&quot; {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           error-message
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             &quot;At least one unicast peer is required in unicast mode.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             &quot;Unicast mode requires an explicit peer list.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           &quot;Selects how VRRP advertisements are sent for this virtual
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">            router. Multicast mode is the default. In unicast mode,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">            advertisements are sent to configured unicast peers.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       container unicast-statistics {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         if-feature &quot;unicast-vrrp&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         config false;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           &quot;Unicast VRRP statistics.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         leaf peer-source-errors {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           type yang:counter64;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             &quot;Number of unicast-mode VRRP packets discarded because the
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              source address was not a configured unicast peer.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         leaf mode-mismatch-errors {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           type yang:counter64;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             &quot;Number of VRRP packets discarded because the packet
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              advertisement mode did not match the configured mode.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     grouping unicast-ipv4-peers {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;IPv4 unicast peer configuration.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       container unicast {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         if-feature &quot;unicast-vrrp&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         when &quot;../advertisement-mode = &#x27;unicast&#x27;&quot; {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             &quot;Only applicable when unicast mode is enabled.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           &quot;Unicast VRRP configuration.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         list peer {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           key &quot;address&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             &quot;Configured IPv4 unicast peers for this virtual router.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           leaf address {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             type inet:ipv4-address;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">               &quot;IPv4 address used by the peer as the source address for
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">                VRRP advertisements.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     grouping unicast-ipv6-peers {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;IPv6 unicast peer configuration.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       container unicast {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         if-feature &quot;unicast-vrrp&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         when &quot;../advertisement-mode = &#x27;unicast&#x27;&quot; {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             &quot;Only applicable when unicast mode is enabled.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           &quot;Unicast VRRP configuration.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         list peer {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           key &quot;address&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             &quot;Configured IPv6 unicast peers for this virtual router.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           leaf address {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             type inet:ipv6-address;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">             description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">               &quot;IPv6 link-local address used by the peer as the source
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">                address for VRRP advertisements.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     augment &quot;/if:interfaces/if:interface/ip:ipv4/vrrp:vrrp/&quot;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           + &quot;vrrp:vrrp-instance&quot; {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;Augments IPv4 VRRP instances with unicast mode configuration
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          and state.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       uses unicast-common;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       uses unicast-ipv4-peers;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     augment &quot;/if:interfaces/if:interface/ip:ipv6/vrrp:vrrp/&quot;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">           + &quot;vrrp:vrrp-instance&quot; {
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       description
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">         &quot;Augments IPv6 VRRP instances with unicast mode configuration
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">          and state.&quot;;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       uses unicast-common;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">       uses unicast-ipv6-peers;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">     }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   }
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   &lt;CODE ENDS&gt;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">11.  Security Considerations
+</td>
+        <td>&nbsp;</td>
+        <td class="right">11.  Security Considerations
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   The security considerations of [RFC9568] continue to apply.  In
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   The security considerations of [RFC9568] continue to apply.  In
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   particular, VRRP still provides no confidentiality and does not
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   particular, VRRP still provides no confidentiality and does not
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   prevent a hostile node from attempting to act as an Active Router.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   prevent a hostile node from attempting to act as an Active Router.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Unicast mode introduces explicit peer configuration and requires that
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Unicast mode introduces explicit peer configuration and requires that
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   a receiver validate the source address against the configured Unicast
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   a receiver validate the source address against the configured Unicast
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Peer List.  This provides an additional filtering mechanism beyond
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Peer List.  This provides an additional filtering mechanism beyond
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   the receive-side IPv4 TTL or IPv6 Hop Limit check.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   the receive-side IPv4 TTL or IPv6 Hop Limit check.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Because this document preserves the requirement that the IPv4 TTL or
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Because this document preserves the requirement that the IPv4 TTL or
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   IPv6 Hop Limit be 255 on transmitted and accepted packets, the
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   IPv6 Hop Limit be 255 on transmitted and accepted packets, the
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   protection against packets arriving from a remote network described
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   protection against packets arriving from a remote network described
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   in [RFC5082] continues to apply.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   in [RFC5082] continues to apply.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   A future specification for multi-hop unicast operation would need a
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   A future specification for multi-hop unicast operation would need a
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   different security model and is outside the scope of this document.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   different security model and is outside the scope of this document.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   The YANG module defined in this document contains writable nodes that
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   control whether a VRRP instance uses multicast or unicast mode for
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   VRRP advertisements and which peers are permitted in unicast mode.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Unauthorized changes to these nodes can cause loss of first-hop
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   redundancy or multiple routers to independently enter Active state.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Access to these nodes MUST be restricted using the access-control
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   mechanisms available to the management protocol in use.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">12.  IANA Considerations
+</td>
+        <td>&nbsp;</td>
+        <td class="right">12.  IANA Considerations
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   This document has no IANA actions.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   IANA is requested to register the following URI in the &quot;ns&quot;
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   subregistry of the IETF XML Registry [RFC3688]:
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   URI:  urn:ietf:params:xml:ns:yang:ietf-vrrp-unicast
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Registrant Contact:  The IESG.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   XML:  N/A; the requested URI is an XML namespace.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   IANA is requested to register the following YANG module in the &quot;YANG
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Module Names&quot; subregistry [RFC6020]:
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Name:  ietf-vrrp-unicast
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Namespace:  urn:ietf:params:xml:ns:yang:ietf-vrrp-unicast
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Prefix:  vrrp-ucast
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   Reference:  RFC XXXX
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">13.  Changes from Version 00
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   This section is to be removed before publication as an RFC.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   *  Changed the intended status from Informational to Standards Track.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   *  Clarified that multicast mode remains the default mode.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   *  Clarified that this document updates VRRPv3 and does not update
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">      VRRPv2.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   *  Added YANG data model extensions based on
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">      [I-D.ietf-rtgwg-vrrp-rfc8347bis].
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   *  Removed implementation survey material from the protocol
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">      specification body.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">1<span class="delete">3</span>.  References
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">1<span class="insert">4</span>.  References
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">1<span class="delete">3</span>.1.  Normative References
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">1<span class="insert">4</span>.1.  Normative References
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   [I-D.ietf-rtgwg-vrrp-rfc8347bis]
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              Lindem, A., &quot;A YANG Data Model for the Virtual Router
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              Redundancy Protocol (VRRP)&quot;, Work in Progress, Internet-
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              Draft, draft-ietf-rtgwg-vrrp-rfc8347bis-15, 13 February
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              2026, &lt;https://datatracker.ietf.org/doc/draft-ietf-rtgwg-
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              vrrp-rfc8347bis/&gt;.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   [RFC2119]  Bradner, S., &quot;Key words for use in RFCs to Indicate
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   [RFC2119]  Bradner, S., &quot;Key words for use in RFCs to Indicate
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              Requirement Levels&quot;, BCP 14, RFC 2119,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              Requirement Levels&quot;, BCP 14, RFC 2119,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              DOI 10.17487/RFC2119, March 1997,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              DOI 10.17487/RFC2119, March 1997,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              &lt;https://www.rfc-editor.org/info/rfc2119&gt;.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              &lt;https://www.rfc-editor.org/info/rfc2119&gt;.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   [RFC3688]  Mealling, M., &quot;The IETF XML Registry&quot;, BCP 81, RFC 3688,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              DOI 10.17487/RFC3688, January 2004,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              &lt;https://www.rfc-editor.org/info/rfc3688&gt;.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   [RFC6020]  Bjorklund, M., &quot;YANG - A Data Modeling Language for the
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              Network Configuration Protocol (NETCONF)&quot;, RFC 6020,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              DOI 10.17487/RFC6020, October 2010,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              &lt;https://www.rfc-editor.org/info/rfc6020&gt;.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   [RFC7950]  Bjorklund, M., &quot;The YANG 1.1 Data Modeling Language&quot;,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              RFC 7950, DOI 10.17487/RFC7950, August 2016,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              &lt;https://www.rfc-editor.org/info/rfc7950&gt;.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   [RFC8174]  Leiba, B., &quot;Ambiguity of Uppercase vs Lowercase in RFC
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   [RFC8174]  Leiba, B., &quot;Ambiguity of Uppercase vs Lowercase in RFC
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              2119 Key Words&quot;, BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              2119 Key Words&quot;, BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              May 2017, &lt;https://www.rfc-editor.org/info/rfc8174&gt;.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              May 2017, &lt;https://www.rfc-editor.org/info/rfc8174&gt;.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   [RFC8343]  Bjorklund, M., &quot;A YANG Data Model for Interface
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              Management&quot;, RFC 8343, DOI 10.17487/RFC8343, March 2018,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              &lt;https://www.rfc-editor.org/info/rfc8343&gt;.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   [RFC8344]  Bjorklund, M., &quot;A YANG Data Model for IP Management&quot;,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              RFC 8344, DOI 10.17487/RFC8344, March 2018,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              &lt;https://www.rfc-editor.org/info/rfc8344&gt;.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   [RFC9568]  Lindem, A. and A. Dogra, &quot;Virtual Router Redundancy
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   [RFC9568]  Lindem, A. and A. Dogra, &quot;Virtual Router Redundancy
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              Protocol (VRRP) Version 3 for IPv4 and IPv6&quot;, RFC 9568,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              Protocol (VRRP) Version 3 for IPv4 and IPv6&quot;, RFC 9568,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              DOI 10.17487/RFC9568, April 2024,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              DOI 10.17487/RFC9568, April 2024,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              &lt;https://www.rfc-editor.org/info/rfc9568&gt;.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              &lt;https://www.rfc-editor.org/info/rfc9568&gt;.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">   [RFC9911]  Schoenwaelder, J., &quot;Common YANG Data Types&quot;, RFC 9911,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              DOI 10.17487/RFC9911, January 2026,
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"><span class="insert">              &lt;https://www.rfc-editor.org/info/rfc9911&gt;.
+</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock">1<span class="delete">3</span>.2.  Informative References
+</td>
+        <td>&nbsp;</td>
+        <td class="rblock">1<span class="insert">4</span>.2.  Informative References
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [CISCO-XR-VRRP]
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Cisco Systems, &quot;Implementing VRRP on Cisco IOS XR&quot;,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Includes a section on Unicast VRRP,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              &lt;https://www.cisco.com/c/en/us/td/docs/routers/asr9000/
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              software/asr9k-r7-9/ip-addresses/configuration/guide/b-ip-
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              addresses-cg-asr9000-79x/implementing-vrrp.html&gt;.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [FRR-SRC]  FRRouting Project, &quot;FRRouting vrrpd Source&quot;, Reviewed for
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Virtual Router MAC construction and advertisement
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              transmission behavior,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              &lt;https://github.com/FRRouting/frr/blob/master/vrrpd/
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              vrrp.c&gt;.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [FRR-VRRP] FRRouting Project, &quot;FRRouting VRRP&quot;,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              &lt;https://docs.frrouting.org/en/stable-7.5/vrrp.html&gt;.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [HUAWEI-UC-VRRP]
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Huawei, &quot;VRRP in Unicast Mode&quot;, Huawei HedEx
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              documentation, EDOC1100363264.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [HUAWEI-UC-VRRP-PORT]
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Huawei, &quot;unicast-vrrp port Command Reference&quot;, Huawei
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              HedEx documentation, EDOC1100277644.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [JUNIPER-CNR-EKS]
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Juniper Networks, &quot;Cloud-Native Router Deployment on
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Amazon EKS&quot;,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              &lt;https://www.juniper.net/documentation/us/en/software/
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              cloud-native-router25.4/cloud-native-router-deployment-
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              guide/topics/concept/system-resource-requirements-
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              eks.html&gt;.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [JUNIPER-CNR-VRRP]
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Juniper Networks, &quot;Cloud-Native Router VRRP Overview&quot;,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              &lt;https://www.juniper.net/documentation/us/en/software/
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              cloud-native-router23.4/cloud-native-router-
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              user/topics/concept/l3-vrrp.html&gt;.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [KEEPALIVED]
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Keepalived Project, &quot;keepalived.conf(5) Manpage&quot;,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              &lt;https://www.keepalived.org/manpage.html&gt;.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [KEEPALIVED-SRC]
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Keepalived Project, &quot;Keepalived VRRP VMAC Source&quot;,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              Reviewed together with vrrp_parser.c for VMAC construction
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              and base-interface transmit behavior in unicast mode,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              &lt;https://github.com/acassen/keepalived/blob/master/
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              keepalived/vrrp/vrrp_vmac.c&gt;.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [MIKROTIK-VRRP]
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              MikroTik, &quot;RouterOS VRRP&quot;,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              &lt;https://help.mikrotik.com/docs/spaces/ROS/pages/81362945/
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              VRRP&gt;.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   [RFC5082]  Gill, V., Heasley, J., and D. Meyer, &quot;The Generalized TTL
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   [RFC5082]  Gill, V., Heasley, J., and D. Meyer, &quot;The Generalized TTL
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              Security Mechanism (GTSM)&quot;, RFC 5082,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              Security Mechanism (GTSM)&quot;, RFC 5082,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              DOI 10.17487/RFC5082, October 2007,
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              DOI 10.17487/RFC5082, October 2007,
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">              &lt;https://www.rfc-editor.org/info/rfc5082&gt;.
+</td>
+        <td>&nbsp;</td>
+        <td class="right">              &lt;https://www.rfc-editor.org/info/rfc5082&gt;.
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">   [VYOS-HA]  VyOS Project, &quot;VyOS High Availability&quot;,
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              &lt;https://docs.vyos.io/en/1.4/configuration/
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="lblock"><span class="delete">              highavailability/&gt;.
+</span></td>
+        <td>&nbsp;</td>
+        <td class="rblock"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">Authors&#x27; Addresses
+</td>
+        <td>&nbsp;</td>
+        <td class="right">Authors&#x27; Addresses
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">
+</td>
+        <td>&nbsp;</td>
+        <td class="right">
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Aditya Dogra
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Aditya Dogra
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Cisco Systems
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Cisco Systems
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Sarjapur Outer Ring Road
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Sarjapur Outer Ring Road
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Bangalore 560103
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Bangalore 560103
+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="left">   Karnataka
+</td>
+        <td>&nbsp;</td>
+        <td class="right">   Karnataka
+</td>
+      </tr>
+      </tbody>
+    </table></body>
+</html>
