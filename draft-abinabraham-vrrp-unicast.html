@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Unicast Support for the Virtual Router Redundancy Protocol (VRRP)</title>
+<meta content="Aditya Dogra" name="author">
+<meta content="Abin Abraham" name="author">
+<meta content="Seshan Krishnamurthy" name="author">
+<meta content="Alexandre Cassen" name="author">
+<meta content="
+       
+        The Virtual Router Redundancy Protocol (VRRP) Version 3 as specified
+        in RFC 9568 assumes multicast operation on a shared LAN. Some
+        deployments require the VRRP first-hop redundancy function but cannot
+        use multicast delivery for VRRP advertisements. This document updates
+        RFC 9568 by defining an optional configured unicast mode for VRRP
+        Version 3 in which advertisements are sent to configured peer
+        addresses rather than to the VRRP multicast group. The VRRP packet
+        format, state machine, protocol number, virtual IP semantics, and
+        Virtual Router MAC behavior remain unchanged from RFC 9568.
+       
+    " name="description">
+<meta content="xml2rfc 3.35.0" name="generator">
+<meta content="VRRP" name="keyword">
+<meta content="unicast" name="keyword">
+<meta content="first-hop redundancy" name="keyword">
+<meta content="draft-abinabraham-vrrp-unicast-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.35.0
+    Python 3.14.10
+    ConfigArgParse 1.9.0
+    google-i18n-address 3.1.1
+    intervaltree 3.2.1
+    Jinja2 3.1.6
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.14.3
+    pycountry 24.6.1
+    PyYAML 6.0.3
+    requests 2.33.1
+    wcwidth 0.9.4
+-->
+<link href="draft-abinabraham-vrrp-unicast.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 680;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1 {
+  &#title {
+    font-size: 32px;
+    line-height: 40px;
+    clear: both;
+    margin: 1.5em 0 0.2em;
+  }
+  &#rfcnum {
+    margin: 1.5em 0 0.2em;
+    & + h1#title {
+      margin: 0.2em 0;
+    }
+  }
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+  & code, & samp, & tt {
+    font-size: 16px;
+    line-height: 0;
+  }
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight {
+  margin: 1em 0;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    margin: 0;
+    float: right;
+    clear: both;
+  }
+  & > *:nth-child(2) {
+    clear: both;
+    display: block;
+    border: none;
+  }
+}
+svg {
+  display: block;
+  /* font-family isn't space-separated, but =~ will have to do */
+  &[font-family~="monospace" i], & [font-family~="monospace" i] {
+    font-family: var(--font-mono);
+  }
+}
+.alignCenter {
+  margin: 1em 0;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+       support flexbox yet.
+    */
+    display: table;
+    margin: 0 auto;
+  }
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+  & li {
+    margin-top: 0.5em;
+  }
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+      float: none;
+    }
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+
+  &:not(.dlNewline) > dt {
+    float: left;
+    margin-right: 2ch;
+    min-width: 8ch;
+  }
+  & > dd {
+    margin-bottom: .8em;
+    margin-left: var(--indent) !important; /* stupid element overrides */
+    min-height: 2ex;
+  }
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a {
+  text-decoration: none;
+  &[href] {
+    color: var(--link-color);
+    &:hover { text-decoration: underline; }
+    &.selfRef {
+      color: var(--text-color);
+      &:hover {
+        text-decoration: none;
+        background-color: var(--highlight-color);
+      }
+    }
+  }
+}
+.iref + a[href].internal {
+  color: var(--text-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+  & blockquote {
+    margin: 0.8em 0.4em 0.4em;
+  }
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+  caption-side: bottom;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) {
+    & p {
+      margin: -2px 0;
+      max-height: 0;
+      transition: max-height 2s ease, margin 0.5s ease 0.5s;
+      overflow: hidden;
+    }
+    &:hover p,
+    & h2:target ~ p {
+      margin: 0.5em 0;
+      max-height: 500px;
+      overflow: auto;
+    }
+  }
+  pre, svg {
+    display: inline-block;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  &.right { margin-left: auto; }
+  &.center { margin-left: auto; margin-right: auto; }
+  &.left { margin-right: auto; }
+  & .text-left { text-align: left; }
+  & .text-center { text-align: center; }
+  & .text-right { text-align: right; }
+  & caption {
+    margin: 0;
+    padding: 3px 0 3px 1em;
+  }
+  & p { margin: 0; }
+}
+
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
+  @media not print {
+    :hover > &, &:focus {
+      opacity: 1;
+    }
+    &[href]:hover {
+      color: var(--pilcrow-strong);
+      background-color: transparent;
+    }
+  }
+  @media print {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+  & .prepared {
+    float: right;
+  }
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
+}
+
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
+}
+
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
+}
+
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses {
+    & > section {
+      column-count: 2;
+      column-gap: 20px;
+    }
+    & > section > h2 {
+      column-span: all;
+    }
+    /* hack for break-inside: avoid-column */
+    & address {
+      display: inline-block;
+      break-inside: avoid-column;
+    }
+  }
+}
+
+/* Comments */
+.rfcEditorRemove {
+  & p:first-of-type {
+    font-style: italic;
+  }
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+
+@media screen {
+  #toc {
+    & nav {
+      font-family: var(--font-title);
+      font-weight: 360;
+      & > ul { margin-bottom: 2em; }
+      & ul {
+        margin: 0 0 0 4px;
+        & :is(p, li) {
+          margin: 2px 0;
+        }
+      }
+    }
+    & a.toplink {
+      float: right;
+    }
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+    & h2 {
+      margin: 0;
+      padding: 2px 0 2px 6px;
+      padding-right: 1em;
+      font-size: 18px;
+      line-height: 24px;
+      min-width: 190px;
+      text-align: right;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      &::before { /* css hamburger */
+        float: right;
+        position: relative;
+        width: 1em;
+        height: 1px;
+        left: -164px;
+        margin: 8px 0 0 0;
+        background: white none repeat scroll 0 0;
+        box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+        content: "";
+      }
+    }
+    & nav {
+      display: none;
+      background-color: var(--background-color);
+      padding: 0.5em 1em 1em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      height: calc(100vh - 48px);
+      border-left: 1px solid #ddd;
+    }
+    &.active {
+      opacity: 1;
+      & nav { display: block; }
+    }
+    /* Make the collapsed ToC header render white on gray also when it's a link */
+    & h2 a,
+    & h2 a:is(:link, :focus, :hover),
+    & a.toplink,
+    & a.toplink:hover {
+      color: white;
+      background-color: #444;
+      text-decoration: none;
+    }
+    & a.toplink {
+      margin: 2px 0.5em 0;
+    }
+  }
+}
+
+/* TOC layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    & h2 {
+      margin: 0;
+      padding: 0.25em 1em 1em 0;
+    }
+    & nav {
+      display: block;
+      height: calc(90vh - 84px);
+      bottom: 0;
+      padding: 0.5em 0 2em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+    & a.toplink {
+      margin: 8px 0.5em 0;
+    }
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc {
+    page-break-before: always;
+    border-top: none;
+    padding-top: 0;
+  }
+  #n-introduction {
+    page-break-before: always;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg {
+  & :is([stroke="black"], [stroke^="#000"]) {
+    stroke: var(--text-color);
+  }
+  & :is([stroke="white"], [stroke^="#fff"]) {
+    stroke: var(--background-color);
+  }
+  & :is([fill="black"], [fill^="#000"], :not([fill], [fill] *)) {
+    fill: var(--text-color);
+  }
+  & :is([fill="white"], [fill^="#fff"]) {
+    fill: var(--background-color);
+  }
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">Unicast VRRP</td>
+<td class="right">November 2026</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Dogra, et al.</td>
+<td class="center">Expires 13 May 2027</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Routing Area Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-abinabraham-vrrp-unicast-latest</dd>
+<dt class="label-updates">Updates:</dt>
+<dd class="updates">
+<a href="https://www.rfc-editor.org/rfc/rfc9568" class="eref">9568</a> (if approved)</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2026-11-09" class="published">9 November 2026</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Standards Track</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2027-05-13">13 May 2027</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">A. Dogra</div>
+<div class="org">Cisco Systems</div>
+</div>
+<div class="author">
+      <div class="author-name">A. Abraham</div>
+<div class="org">Cisco Systems</div>
+</div>
+<div class="author">
+      <div class="author-name">S. Krishnamurthy</div>
+<div class="org">AMD</div>
+</div>
+<div class="author">
+      <div class="author-name">A. Cassen</div>
+<div class="org">Free / keepalived.org</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Unicast Support for the Virtual Router Redundancy Protocol (VRRP)</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">
+        The Virtual Router Redundancy Protocol (VRRP) Version 3 as specified
+        in RFC 9568 assumes multicast operation on a shared LAN. Some
+        deployments require the VRRP first-hop redundancy function but cannot
+        use multicast delivery for VRRP advertisements. This document updates
+        RFC 9568 by defining an optional configured unicast mode for VRRP
+        Version 3 in which advertisements are sent to configured peer
+        addresses rather than to the VRRP multicast group. The VRRP packet
+        format, state machine, protocol number, virtual IP semantics, and
+        Virtual Router MAC behavior remain unchanged from RFC 9568.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 13 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2026 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-requirements-language" class="internal xref">Requirements Language</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-scope-and-applicability" class="internal xref">Scope and Applicability</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-additional-definitions" class="internal xref">Additional Definitions</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-unicast-vrrp-overview" class="internal xref">Unicast VRRP Overview</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-peer-configuration" class="internal xref">Peer Configuration</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-updates-to-rfc-9568" class="internal xref">Updates to RFC 9568</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-vrrp-overview" class="internal xref">VRRP Overview</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-protocol-processing" class="internal xref">Protocol Processing</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-ipv4-field-descriptions" class="internal xref">IPv4 Field Descriptions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.4">
+                <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="auto internal xref">7.4</a>.  <a href="#name-ipv6-field-descriptions" class="internal xref">IPv6 Field Descriptions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.5">
+                <p id="section-toc.1-1.7.2.5.1"><a href="#section-7.5" class="auto internal xref">7.5</a>.  <a href="#name-checksum-computation" class="internal xref">Checksum Computation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.6">
+                <p id="section-toc.1-1.7.2.6.1"><a href="#section-7.6" class="auto internal xref">7.6</a>.  <a href="#name-transmitting-vrrp-packets" class="internal xref">Transmitting VRRP Packets</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.7">
+                <p id="section-toc.1-1.7.2.7.1"><a href="#section-7.7" class="auto internal xref">7.7</a>.  <a href="#name-receiving-vrrp-packets" class="internal xref">Receiving VRRP Packets</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.8">
+                <p id="section-toc.1-1.7.2.8.1"><a href="#section-7.8" class="auto internal xref">7.8</a>.  <a href="#name-state-machine" class="internal xref">State Machine</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.9">
+                <p id="section-toc.1-1.7.2.9.1"><a href="#section-7.9" class="auto internal xref">7.9</a>.  <a href="#name-host-facing-behavior" class="internal xref">Host-Facing Behavior</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-misconfiguration-detection-" class="internal xref">Misconfiguration Detection and Error Handling</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-source-validation-failures" class="internal xref">Source Validation Failures</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-mode-mismatch" class="internal xref">Mode Mismatch</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-silent-peer-failure" class="internal xref">Silent Peer Failure</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.4">
+                <p id="section-toc.1-1.8.2.4.1"><a href="#section-8.4" class="auto internal xref">8.4</a>.  <a href="#name-asymmetric-peer-lists" class="internal xref">Asymmetric Peer Lists</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-operational-considerations" class="internal xref">Operational Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-yang-considerations" class="internal xref">YANG Considerations</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-ttl-hop-limit-protection" class="internal xref">TTL/Hop Limit Protection</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-security-recommendations" class="internal xref">Security Recommendations</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-implementation-status" class="internal xref">Implementation Status</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
+            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
+            <p id="section-toc.1-1.16.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="intro">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">
+        <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span> specifies VRRP Version 3 for IPv4 and IPv6
+        and assumes multicast operation on a shared LAN. In a number of
+        deployments, redundant routers still need fast active/backup failover
+        for a virtual default gateway, but the environment does not provide
+        usable multicast support for VRRP advertisements.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">
+        The primary deployment driver is the continued need for the classic
+        VRRPv3 function of protecting a virtual IPv4 or IPv6 first-hop gateway
+        in environments where multicast delivery is unavailable or is not
+        used because of operational or security policy. This includes
+        multicast-capable multiaccess LANs on which operators choose
+        configured unicast, as well as virtualized, cloud, overlay, and other
+        networks that provide host-facing LAN semantics while delivering VRRP
+        control traffic through explicit single-hop peer connectivity.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">
+        Multiple implementations already support some form of unicast VRRP
+        advertisement delivery, including Cisco IOS XR, Keepalived, VyOS, and
+        Juniper Cloud-Native Router. This document provides a common
+        specification for the most conservative unicast extension: replace
+        multicast advertisement delivery with configured unicast peers while
+        preserving the rest of the VRRP protocol.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">
+        The intended use case for this document is not a generic active/backup
+        role-election mechanism. Rather, it is a narrow extension of VRRPv3 for
+        deployments that want to preserve the familiar VRRP state machine,
+        protocol number, virtual IP address semantics, Virtual Router MAC
+        behavior, and host-facing forwarding model while using a different
+        advertisement delivery mode.<a href="#section-1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="req-lang">
+<section id="section-2">
+      <h2 id="name-requirements-language">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-requirements-language" class="section-name selfRef">Requirements Language</a>
+      </h2>
+<p id="section-2-1">
+        The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>",
+        "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>",
+        "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>",
+        "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>",
+        "<span class="bcp14">NOT RECOMMENDED</span>", "<span class="bcp14">MAY</span>", and
+        "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+        described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span>
+        when, and only when, they appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="scope">
+<section id="section-3">
+      <h2 id="name-scope-and-applicability">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-scope-and-applicability" class="section-name selfRef">Scope and Applicability</a>
+      </h2>
+<p id="section-3-1">
+        This document updates <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span> by defining an
+        optional configured unicast mode of operation for VRRPv3. Multicast
+        mode remains the default mode of operation. The unicast mode is
+        intended for deployments that still want the classic VRRP model of a
+        Virtual Router protecting one or more virtual IPv4 or IPv6 addresses,
+        but that either cannot rely on multicast delivery of advertisements or
+        intentionally do not use it because of operational or security policy.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">
+        The underlying connectivity remains a common multiaccess LAN, or a
+        logical LAN that provides equivalent service, for the protected hosts
+        and participating VRRP Routers. This document does not redefine VRRP
+        for a routed point-to-multipoint topology. The physical realization
+        can be Ethernet or a virtual or overlay network, but it
+        <span class="bcp14">MUST</span> preserve the host-facing behavior specified in
+        <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>, including delivery to the Virtual Router MAC
+        address and the applicable ARP or IPv6 Neighbor Discovery behavior. A
+        network that provides only routed unicast connectivity between VRRP
+        Routers and cannot provide these LAN semantics is outside the scope of
+        this specification.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">
+        Within this link model, the link either does not provide usable
+        multicast delivery for VRRP advertisements or provides multicast while
+        the operator chooses configured unicast because of operational or
+        security policy. In both cases, advertisements are exchanged directly
+        between configured peers on the same IP link.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">
+        The unicast mode defined here is limited to deployments in which the
+        participating VRRP Routers can exchange unicast packets whose IPv4 TTL
+        or IPv6 Hop Limit is 255 on receipt. This preserves the receive-side
+        validation model of
+        <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span> and the GTSM <span>[<a href="#RFC5082" class="cite xref">RFC5082</a>]</span>
+        protection against remote injection. In practice, this means the
+        VRRP Routers must be reachable without traversing any device that
+        decrements the TTL or Hop Limit.<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-5">
+        This document does not define multi-hop operation. If a deployment
+        requires routed multi-hop active/backup election or transport
+        encapsulation other than IP protocol 112, that deployment is outside
+        the scope of this specification.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">
+        This document does not update VRRP Version 2.<a href="#section-3-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="definitions">
+<section id="section-4">
+      <h2 id="name-additional-definitions">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-additional-definitions" class="section-name selfRef">Additional Definitions</a>
+      </h2>
+<span class="break"></span><dl class="dlParallel" id="section-4-1">
+        <dt id="section-4-1.1">Unicast Mode</dt>
+        <dd style="margin-left: 12.0em" id="section-4-1.2">
+          <p id="section-4-1.2.1">
+            A mode of VRRP operation in which advertisements for a Virtual
+            Router are sent as unicast IPv4 or IPv6 packets to configured peer
+            addresses instead of to the VRRP multicast destination address.<a href="#section-4-1.2.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-4-1.3">Unicast Peer</dt>
+        <dd style="margin-left: 12.0em" id="section-4-1.4">
+          <p id="section-4-1.4.1">
+            A configured VRRP Router participating in the same Virtual Router
+            and address family whose address is used as a permitted source and
+            destination for unicast VRRP advertisements.<a href="#section-4-1.4.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-4-1.5">Unicast Peer List</dt>
+        <dd style="margin-left: 12.0em" id="section-4-1.6">
+          <p id="section-4-1.6.1">
+            The configured set of all other VRRP Routers that participate in a
+            unicast-mode Virtual Router for a given address family. This list
+            serves as both a destination list for transmission and an allow-list
+            for reception.<a href="#section-4-1.6.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="overview">
+<section id="section-5">
+      <h2 id="name-unicast-vrrp-overview">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-unicast-vrrp-overview" class="section-name selfRef">Unicast VRRP Overview</a>
+      </h2>
+<p id="section-5-1">
+        A Virtual Router defined by this document operates in exactly one of
+        two advertisement modes:<a href="#section-5-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-2.1">multicast mode, as specified in <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>, or<a href="#section-5-2.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-5-2.2">unicast mode, as specified in this document.<a href="#section-5-2.2" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-5-3">
+        Multicast mode is the default mode. A VRRP Router
+        <span class="bcp14">MUST</span> use multicast mode unless unicast mode is
+        explicitly configured for the Virtual Router.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">
+        A VRRP Router operating a given Virtual Router in unicast mode
+        <span class="bcp14">MUST NOT</span> send VRRP advertisements for that Virtual
+        Router to the VRRP multicast destination address. Instead, it
+        <span class="bcp14">MUST</span> send a copy of each advertisement to each address
+        in the configured Unicast Peer List.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">
+        Except as updated by this document, the VRRP packet format, VRRP
+        state machine, timer calculations, preemption behavior, Priority 0
+        advertisements, Address Owner behavior, Accept_Mode, Virtual Router
+        semantics, virtual IP address behavior, and host-facing forwarding
+        behavior remain as specified in <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>.<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-6">
+        Unicast mode is configured per Virtual Router.
+        A VRRP Router <span class="bcp14">MUST NOT</span> mix multicast mode and unicast
+        mode for the same Virtual Router instance.<a href="#section-5-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="peer-config">
+<section id="section-6">
+      <h2 id="name-peer-configuration">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-peer-configuration" class="section-name selfRef">Peer Configuration</a>
+      </h2>
+<p id="section-6-1">
+        A Virtual Router operating in unicast mode <span class="bcp14">MUST</span> be
+        configured with one or more Unicast Peers. A configuration that
+        enables unicast mode without at least one peer is invalid, and the
+        Virtual Router <span class="bcp14">MUST NOT</span> operate in unicast mode until
+        corrected.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">
+        Each VRRP Router participating in a unicast-mode Virtual Router
+        <span class="bcp14">MUST</span> be configured with the addresses of all other
+        participating VRRP Routers for that Virtual Router and address family.
+        Symmetric peer-list configuration is essential for correct protocol
+        operation, including Active/Backup election, preemption, and
+        advertisement-interval learning.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">
+        For IPv4 operation, each configured peer address <span class="bcp14">MUST</span>
+        be an IPv4 address that the peer uses as the source address
+        for VRRP advertisements, as described in
+        <a href="#ipv4-fields" class="auto internal xref">Section 7.3</a>. For IPv6 operation, each configured peer
+        address <span class="bcp14">MUST</span> be an IPv6 link-local address that the
+        peer uses as the source address for VRRP advertisements, as described
+        in <a href="#ipv6-fields" class="auto internal xref">Section 7.4</a>. For IPv6, the configured link-local
+        address must be reachable on the interface associated with the Virtual
+        Router.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4">
+        The local router's own address <span class="bcp14">MUST NOT</span> appear in its
+        Unicast Peer List.<a href="#section-6-4" class="pilcrow">¶</a></p>
+<p id="section-6-5">
+        A conforming implementation <span class="bcp14">MUST</span> support at least one
+        configured Unicast Peer. Implementations <span class="bcp14">SHOULD</span>
+        support multiple peers for deployments with more than two VRRP Routers
+        in a Virtual Router group.<a href="#section-6-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="rfc9568-updates">
+<section id="section-7">
+      <h2 id="name-updates-to-rfc-9568">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-updates-to-rfc-9568" class="section-name selfRef">Updates to RFC 9568</a>
+      </h2>
+<div id="overview-update">
+<section id="section-7.1">
+        <h3 id="name-vrrp-overview">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-vrrp-overview" class="section-name selfRef">VRRP Overview</a>
+        </h3>
+<p id="section-7.1-1">
+          The references to multicast-only operation in
+          <span><a href="https://rfc-editor.org/rfc/rfc9568#section-3" class="relref">Section 3</a> of [<a href="#RFC9568" class="cite xref">RFC9568</a>]</span> are updated
+          to allow an advertisement to be delivered either to the VRRP
+          multicast destination address, as specified in
+          <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>, or to configured Unicast Peers, as
+          specified in this document.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="protocol-update">
+<section id="section-7.2">
+        <h3 id="name-protocol-processing">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-protocol-processing" class="section-name selfRef">Protocol Processing</a>
+        </h3>
+<p id="section-7.2-1">
+          <span><a href="https://rfc-editor.org/rfc/rfc9568#section-5" class="relref">Section 5</a> of [<a href="#RFC9568" class="cite xref">RFC9568</a>]</span> is updated
+          so that a Virtual Router operating in unicast mode sends and
+          receives VRRP advertisements only through the configured Unicast Peer
+          List for that Virtual Router and address family.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="ipv4-fields">
+<section id="section-7.3">
+        <h3 id="name-ipv4-field-descriptions">
+<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-ipv4-field-descriptions" class="section-name selfRef">IPv4 Field Descriptions</a>
+        </h3>
+<p id="section-7.3-1">
+          For a Virtual Router operating in unicast mode, the IPv4 field
+          descriptions in <span><a href="https://rfc-editor.org/rfc/rfc9568#section-5.1.1" class="relref">Section 5.1.1</a> of [<a href="#RFC9568" class="cite xref">RFC9568</a>]</span> are updated as follows:<a href="#section-7.3-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-7.3-2">
+          <li id="section-7.3-2.1">
+            <p id="section-7.3-2.1.1">
+              The IPv4 source address <span class="bcp14">MUST</span> be the primary IPv4
+              address of the sending interface, as specified in
+              <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>.<a href="#section-7.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.3-2.2">
+            <p id="section-7.3-2.2.1">
+              The IPv4 destination address <span class="bcp14">MUST</span> be the address
+              configured in the Unicast Peer List for the peer to which the
+              copy of the advertisement is being sent.<a href="#section-7.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.3-2.3">
+            <p id="section-7.3-2.3.1">
+              The IPv4 TTL <span class="bcp14">MUST</span> be set to 255, and a received
+              packet whose IPv4 TTL is not 255 <span class="bcp14">MUST</span> be
+              discarded.<a href="#section-7.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.3-2.4">
+            <p id="section-7.3-2.4.1">
+              The IPv4 Protocol field <span class="bcp14">MUST</span> remain 112.<a href="#section-7.3-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+</section>
+</div>
+<div id="ipv6-fields">
+<section id="section-7.4">
+        <h3 id="name-ipv6-field-descriptions">
+<a href="#section-7.4" class="section-number selfRef">7.4. </a><a href="#name-ipv6-field-descriptions" class="section-name selfRef">IPv6 Field Descriptions</a>
+        </h3>
+<p id="section-7.4-1">
+          For a Virtual Router operating in unicast mode, the IPv6 field
+          descriptions in <span><a href="https://rfc-editor.org/rfc/rfc9568#section-5.1.2" class="relref">Section 5.1.2</a> of [<a href="#RFC9568" class="cite xref">RFC9568</a>]</span> are updated as follows:<a href="#section-7.4-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-7.4-2">
+          <li id="section-7.4-2.1">
+            <p id="section-7.4-2.1.1">
+              The IPv6 source address <span class="bcp14">MUST</span> be the link-local
+              address of the sending interface, as specified in
+              <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>.<a href="#section-7.4-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.4-2.2">
+            <p id="section-7.4-2.2.1">
+              The IPv6 destination address <span class="bcp14">MUST</span> be the
+              IPv6 link-local address configured in the Unicast Peer List for
+              the peer to which the copy of the advertisement is being sent.<a href="#section-7.4-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.4-2.3">
+            <p id="section-7.4-2.3.1">
+              The IPv6 Hop Limit <span class="bcp14">MUST</span> be set to 255, and a
+              received packet whose Hop Limit is not 255 <span class="bcp14">MUST</span>
+              be discarded.<a href="#section-7.4-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.4-2.4">
+            <p id="section-7.4-2.4.1">
+              The IPv6 Next Header field <span class="bcp14">MUST</span> remain 112.<a href="#section-7.4-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+</section>
+</div>
+<div id="checksum-update">
+<section id="section-7.5">
+        <h3 id="name-checksum-computation">
+<a href="#section-7.5" class="section-number selfRef">7.5. </a><a href="#name-checksum-computation" class="section-name selfRef">Checksum Computation</a>
+        </h3>
+<p id="section-7.5-1">
+          Unicast mode does not define a new VRRP checksum algorithm. A VRRP
+          Router operating in unicast mode computes and verifies the checksum
+          as specified in <span><a href="https://rfc-editor.org/rfc/rfc9568#section-5.2.8" class="relref">Section 5.2.8</a> of [<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>.<a href="#section-7.5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="tx-update">
+<section id="section-7.6">
+        <h3 id="name-transmitting-vrrp-packets">
+<a href="#section-7.6" class="section-number selfRef">7.6. </a><a href="#name-transmitting-vrrp-packets" class="section-name selfRef">Transmitting VRRP Packets</a>
+        </h3>
+<p id="section-7.6-1">
+          <span><a href="https://rfc-editor.org/rfc/rfc9568#section-7.2" class="relref">Section 7.2</a> of [<a href="#RFC9568" class="cite xref">RFC9568</a>]</span> is updated
+          so that a VRRP Router operating a Virtual Router in unicast mode
+          sends one copy of each VRRP advertisement to each configured Unicast
+          Peer instead of sending the advertisement to the VRRP multicast
+          group.<a href="#section-7.6-1" class="pilcrow">¶</a></p>
+<p id="section-7.6-2">
+          Other than the destination address (and, for IPv6, the resulting
+          checksum), the packet contents <span class="bcp14">MUST</span> be the same for
+          each transmitted copy.<a href="#section-7.6-2" class="pilcrow">¶</a></p>
+<p id="section-7.6-3">
+          The source MAC address <span class="bcp14">MUST</span> be the Virtual Router MAC
+          address as specified in <span><a href="https://rfc-editor.org/rfc/rfc9568#section-7.2" class="relref">Section 7.2</a> of [<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>. This is unchanged from multicast mode.<a href="#section-7.6-3" class="pilcrow">¶</a></p>
+<p id="section-7.6-4">
+          Priority 0 advertisements (indicating that the Active Router is
+          relinquishing the active role) are sent to all configured Unicast
+          Peers, exactly as regular advertisements are sent.<a href="#section-7.6-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="rx-update">
+<section id="section-7.7">
+        <h3 id="name-receiving-vrrp-packets">
+<a href="#section-7.7" class="section-number selfRef">7.7. </a><a href="#name-receiving-vrrp-packets" class="section-name selfRef">Receiving VRRP Packets</a>
+        </h3>
+<p id="section-7.7-1">
+          A VRRP Router operating a Virtual Router in unicast mode
+          <span class="bcp14">MUST</span> process only advertisements whose source address
+          matches an address in the configured Unicast Peer List for that
+          Virtual Router and address family.<a href="#section-7.7-1" class="pilcrow">¶</a></p>
+<p id="section-7.7-2">
+          A received VRRP packet for a unicast-mode Virtual Router
+          <span class="bcp14">MUST</span> be discarded if:<a href="#section-7.7-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.7-3.1">the source address is not in the configured Unicast Peer List,<a href="#section-7.7-3.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-7.7-3.2">the IPv4 TTL or IPv6 Hop Limit is not 255,<a href="#section-7.7-3.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-7.7-3.3">the packet is received for the wrong address family, or<a href="#section-7.7-3.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-7.7-3.4">the packet is otherwise invalid according to <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>.<a href="#section-7.7-3.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-7.7-4">
+          A VRRP Router operating a Virtual Router in unicast mode
+          <span class="bcp14">MUST</span> ignore VRRP advertisements for that same Virtual
+          Router received through multicast delivery (i.e., advertisements
+          whose destination address is the VRRP multicast group address).<a href="#section-7.7-4" class="pilcrow">¶</a></p>
+<p id="section-7.7-5">
+          A VRRP Router operating a Virtual Router in multicast mode
+          <span class="bcp14">MUST</span> ignore unicast-delivered VRRP advertisements for
+          that same Virtual Router.<a href="#section-7.7-5" class="pilcrow">¶</a></p>
+<p id="section-7.7-6">
+          These mode-isolation rules ensure that misconfigured peers
+          operating in different modes for the same VRID do not interfere
+          with each other's state machines.<a href="#section-7.7-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="state-machine-update">
+<section id="section-7.8">
+        <h3 id="name-state-machine">
+<a href="#section-7.8" class="section-number selfRef">7.8. </a><a href="#name-state-machine" class="section-name selfRef">State Machine</a>
+        </h3>
+<p id="section-7.8-1">
+          Unicast mode does not change the VRRP state machine defined in
+          <span><a href="https://rfc-editor.org/rfc/rfc9568#section-6" class="relref">Section 6</a> of [<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>. The states,
+          state transitions, timer calculations, preemption behavior, Priority
+          0 processing, Address Owner behavior, and Accept_Mode behavior remain
+          unchanged.<a href="#section-7.8-1" class="pilcrow">¶</a></p>
+<p id="section-7.8-2">
+          A Virtual Router operating in unicast mode applies the transmit and
+          receive rules in <a href="#tx-update" class="auto internal xref">Section 7.6</a> and
+          <a href="#rx-update" class="auto internal xref">Section 7.7</a> when the state machine sends or processes
+          VRRP advertisements.<a href="#section-7.8-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="host-facing-update">
+<section id="section-7.9">
+        <h3 id="name-host-facing-behavior">
+<a href="#section-7.9" class="section-number selfRef">7.9. </a><a href="#name-host-facing-behavior" class="section-name selfRef">Host-Facing Behavior</a>
+        </h3>
+<p id="section-7.9-1">
+          This document changes only advertisement delivery. The Active
+          Router's behavior with respect to the Virtual Router MAC address,
+          ARP, gratuitous ARP, IPv6 Neighbor Discovery, Router
+          Advertisements, Unsolicited Neighbor Advertisements, and forwarding
+          responsibility remains as specified in <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>.<a href="#section-7.9-1" class="pilcrow">¶</a></p>
+<p id="section-7.9-2">
+          In particular, unicast mode does not change the Virtual Router MAC
+          address. The Virtual Router MAC remains the well-known unicast VRRP
+          MAC associated with the VRID (00-00-5E-00-01-{VRID} for IPv4 and
+          00-00-5E-00-02-{VRID} for IPv6), as specified in
+          <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span>.<a href="#section-7.9-2" class="pilcrow">¶</a></p>
+<p id="section-7.9-3">
+          Accept_Mode and Address Owner behavior are unchanged. An Address
+          Owner (Priority 255) immediately transitions to Active state and
+          sends advertisements to all configured Unicast Peers.<a href="#section-7.9-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="error-handling">
+<section id="section-8">
+      <h2 id="name-misconfiguration-detection-">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-misconfiguration-detection-" class="section-name selfRef">Misconfiguration Detection and Error Handling</a>
+      </h2>
+<p id="section-8-1">
+        Unicast mode relies on correct and symmetric peer-list configuration.
+        Unlike multicast mode, where any router on the segment can hear all
+        advertisements, unicast mode creates bilateral reachability
+        dependencies. This section specifies error handling for common
+        misconfiguration scenarios.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<div id="error-source">
+<section id="section-8.1">
+        <h3 id="name-source-validation-failures">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-source-validation-failures" class="section-name selfRef">Source Validation Failures</a>
+        </h3>
+<p id="section-8.1-1">
+          Implementations <span class="bcp14">MUST</span> maintain a counter of VRRP
+          advertisements discarded because the source address was not in the
+          configured Unicast Peer List for the relevant Virtual Router and
+          address family.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">
+          Implementations <span class="bcp14">SHOULD</span> log the first occurrence
+          (subject to rate-limiting) of a source validation failure for a
+          given Virtual Router, including the unexpected source address, the
+          VRID, and the interface.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="error-mismatch">
+<section id="section-8.2">
+        <h3 id="name-mode-mismatch">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-mode-mismatch" class="section-name selfRef">Mode Mismatch</a>
+        </h3>
+<p id="section-8.2-1">
+          A mode mismatch occurs when some routers for a given VRID are
+          operating in unicast mode while others are in multicast mode. This
+          can result in a dual-Active condition because routers in different
+          modes will not hear each other's advertisements.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.2-2">
+          Implementations <span class="bcp14">SHOULD</span> log a warning if the Virtual
+          Router is in unicast mode and a VRRP multicast advertisement for the
+          same VRID is received on the same interface (indicating a likely
+          mode mismatch in the network).<a href="#section-8.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="error-silent">
+<section id="section-8.3">
+        <h3 id="name-silent-peer-failure">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-silent-peer-failure" class="section-name selfRef">Silent Peer Failure</a>
+        </h3>
+<p id="section-8.3-1">
+          When a Backup Router's Active_Down_Timer fires and no advertisements
+          were received from any configured peer during the timer period, this
+          <span class="bcp14">MAY</span> indicate either Active Router failure (the
+          correct failover case) or a connectivity or configuration problem.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3-2">
+          Implementations <span class="bcp14">SHOULD</span> provide per-peer operational
+          state showing the last-received advertisement timestamp for each
+          configured Unicast Peer. This assists operators in distinguishing
+          between Active Router failure and reachability/configuration issues.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="error-asymmetric">
+<section id="section-8.4">
+        <h3 id="name-asymmetric-peer-lists">
+<a href="#section-8.4" class="section-number selfRef">8.4. </a><a href="#name-asymmetric-peer-lists" class="section-name selfRef">Asymmetric Peer Lists</a>
+        </h3>
+<p id="section-8.4-1">
+          If Router A has Router B in its Unicast Peer List but Router B does
+          not have Router A in its peer list, then Router A's advertisements
+          will be discarded by Router B. This can cause Router B to
+          independently transition to Active, resulting in a dual-Active
+          condition.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
+<p id="section-8.4-2">
+          This specification does not define an in-band mechanism to detect
+          or correct asymmetric peer configuration. Operators
+          <span class="bcp14">MUST</span> ensure symmetric peer-list configuration across
+          all routers participating in a unicast-mode Virtual Router.
+          Management-plane tools (YANG model, configuration audit) are the
+          intended mechanism for verifying symmetry.<a href="#section-8.4-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="operational">
+<section id="section-9">
+      <h2 id="name-operational-considerations">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-operational-considerations" class="section-name selfRef">Operational Considerations</a>
+      </h2>
+<p id="section-9-1">
+        A deployment using unicast mode <span class="bcp14">SHOULD</span> ensure that all
+        routers in a given Virtual Router are configured with a consistent
+        peer inventory. Inconsistent peer lists can create asymmetric
+        reachability and can lead to multiple routers independently deciding
+        that the Active Router has failed.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-2">
+        A deployment using unicast mode <span class="bcp14">SHOULD</span> continue to use
+        distinct priority values as recommended in <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span> so
+        that Backup Routers do not transition to Active state simultaneously
+        after a failure.<a href="#section-9-2" class="pilcrow">¶</a></p>
+<div id="op-yang">
+<section id="section-9.1">
+        <h3 id="name-yang-considerations">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-yang-considerations" class="section-name selfRef">YANG Considerations</a>
+        </h3>
+<p id="section-9.1-1">
+          This document does not define a YANG module. The VRRP YANG data model
+          is currently being revised by
+          <span>[<a href="#I-D.ietf-rtgwg-vrrp-rfc8347bis" class="cite xref">I-D.ietf-rtgwg-vrrp-rfc8347bis</a>]</span>, which is intended
+          to obsolete <span>[<a href="#RFC8347" class="cite xref">RFC8347</a>]</span>. Deferring the unicast VRRP
+          YANG augmentation until that work is approved or published allows the
+          augmentation to be based on the stable successor to
+          <span>[<a href="#RFC8347" class="cite xref">RFC8347</a>]</span>, avoids unnecessary churn against a moving
+          base model, and helps ensure alignment with the final VRRP YANG
+          schema.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.1-2">
+          A future revision of this document, or a companion YANG document, is
+          expected to define the management model for configuring the VRRP
+          advertisement mode, the unicast peer list, and related operational
+          state after <span>[<a href="#I-D.ietf-rtgwg-vrrp-rfc8347bis" class="cite xref">I-D.ietf-rtgwg-vrrp-rfc8347bis</a>]</span> has been
+          approved or published as an RFC.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="security">
+<section id="section-10">
+      <h2 id="name-security-considerations">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-10-1">
+        The security considerations of <span>[<a href="#RFC9568" class="cite xref">RFC9568</a>]</span> continue to
+        apply. In particular, VRRP still provides no confidentiality and does
+        not include cryptographic authentication of VRRP advertisements.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<div id="sec-gtsm">
+<section id="section-10.1">
+        <h3 id="name-ttl-hop-limit-protection">
+<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-ttl-hop-limit-protection" class="section-name selfRef">TTL/Hop Limit Protection</a>
+        </h3>
+<p id="section-10.1-1">
+          This document preserves the requirement that the IPv4 TTL or IPv6
+          Hop Limit be 255 on transmitted and accepted packets.  The
+          protection against packets arriving from a remote network described
+          in <span>[<a href="#RFC5082" class="cite xref">RFC5082</a>]</span> therefore continues to apply. An
+          attacker must be on the same link (or logical link) as the VRRP
+          Routers to inject or forge VRRP advertisements.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-recommendations">
+<section id="section-10.2">
+        <h3 id="name-security-recommendations">
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-security-recommendations" class="section-name selfRef">Security Recommendations</a>
+        </h3>
+<p id="section-10.2-1">
+          Deployments using unicast VRRP in environments with untrusted
+          on-link neighbors <span class="bcp14">SHOULD</span> protect VRRP advertisement
+          exchange using link-layer security (e.g., IEEE 802.1AE MACsec) or
+          network-layer security (e.g., IPsec transport mode).<a href="#section-10.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.2-2">
+          A future specification for multi-hop unicast operation would need a
+          fundamentally different security model and is outside the scope of
+          this document.<a href="#section-10.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="impl-status">
+<section id="section-11">
+      <h2 id="name-implementation-status">
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-implementation-status" class="section-name selfRef">Implementation Status</a>
+      </h2>
+<p id="section-11-1">
+        [RFC Editor: This section is to be removed before publication.]<a href="#section-11-1" class="pilcrow">¶</a></p>
+<p id="section-11-2">
+        This section records the status of known implementations of the
+        protocol behavior described in this specification at the time of
+        posting, per <span>[<a href="#RFC7942" class="cite xref">RFC7942</a>]</span>.<a href="#section-11-2" class="pilcrow">¶</a></p>
+<p id="section-11-3">
+        Known implementations or products that support unicast VRRP include
+        Cisco IOS XR, Keepalived, VyOS, and Juniper Cloud-Native Router.<a href="#section-11-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana">
+<section id="section-12">
+      <h2 id="name-iana-considerations">
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-12-1">
+        This document requests no IANA actions.<a href="#section-12-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="ack">
+<section id="section-13">
+      <h2 id="name-acknowledgements">
+<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      </h2>
+<p id="section-13-1">
+        The authors thank Acee Lindem for his work on RFC 9568 and
+        draft-ietf-rtgwg-vrrp-rfc8347bis, which provide the foundation for
+        this extension, and for comments that clarified the underlying link
+        model during the presentation at IETF 126.<a href="#section-13-1" class="pilcrow">¶</a></p>
+<p id="section-13-2">
+        The longstanding contributions of the Keepalived community to unicast
+        VRRP are gratefully acknowledged. In particular, the work of Alexandre
+        Cassen and Quentin Armitage in developing and maintaining Keepalived, a
+        mature open-source implementation with support for unicast VRRP, has
+        provided valuable implementation experience for this specification.<a href="#section-13-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<section id="section-14">
+      <h2 id="name-normative-references">
+<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      </h2>
+<dl class="references">
+<dt id="RFC2119">[RFC2119]</dt>
+      <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+      <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9568">[RFC9568]</dt>
+    <dd>
+<span class="refAuthor">Lindem, A.</span> and <span class="refAuthor">A. Dogra</span>, <span class="refTitle">"Virtual Router Redundancy Protocol (VRRP) Version 3 for IPv4 and IPv6"</span>, <span class="seriesInfo">RFC 9568</span>, <span class="seriesInfo">DOI 10.17487/RFC9568</span>, <time datetime="2024-04" class="refDate">April 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc9568">https://www.rfc-editor.org/info/rfc9568</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+<section id="section-15">
+      <h2 id="name-informative-references">
+<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+      </h2>
+<dl class="references">
+<dt id="I-D.ietf-rtgwg-vrrp-rfc8347bis">[I-D.ietf-rtgwg-vrrp-rfc8347bis]</dt>
+      <dd>
+<span class="refAuthor">Lindem, A.</span>, <span class="refTitle">"A YANG Data Model for the Virtual Router Redundancy Protocol (VRRP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rtgwg-vrrp-rfc8347bis-15</span>, <time datetime="2026-02-13" class="refDate">13 February 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-rtgwg-vrrp-rfc8347bis/">https://datatracker.ietf.org/doc/draft-ietf-rtgwg-vrrp-rfc8347bis/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5082">[RFC5082]</dt>
+      <dd>
+<span class="refAuthor">Gill, V.</span>, <span class="refAuthor">Heasley, J.</span>, and <span class="refAuthor">D. Meyer</span>, <span class="refTitle">"The Generalized TTL Security Mechanism (GTSM)"</span>, <span class="seriesInfo">RFC 5082</span>, <span class="seriesInfo">DOI 10.17487/RFC5082</span>, <time datetime="2007-10" class="refDate">October 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5082">https://www.rfc-editor.org/info/rfc5082</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7942">[RFC7942]</dt>
+      <dd>
+<span class="refAuthor">Sheffer, Y.</span> and <span class="refAuthor">A. Farrel</span>, <span class="refTitle">"Improving Awareness of Running Code: The Implementation Status Section"</span>, <span class="seriesInfo">BCP 205</span>, <span class="seriesInfo">RFC 7942</span>, <span class="seriesInfo">DOI 10.17487/RFC7942</span>, <time datetime="2016-07" class="refDate">July 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7942">https://www.rfc-editor.org/info/rfc7942</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8347">[RFC8347]</dt>
+    <dd>
+<span class="refAuthor">Liu, X., Ed.</span>, <span class="refAuthor">Kyparlis, A.</span>, <span class="refAuthor">Parikh, R.</span>, <span class="refAuthor">Lindem, A.</span>, and <span class="refAuthor">M. Zhang</span>, <span class="refTitle">"A YANG Data Model for the Virtual Router Redundancy Protocol (VRRP)"</span>, <span class="seriesInfo">RFC 8347</span>, <span class="seriesInfo">DOI 10.17487/RFC8347</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8347">https://www.rfc-editor.org/info/rfc8347</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+<div id="authors-addresses">
+<section id="appendix-A">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Aditya Dogra</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
+<div dir="auto" class="left"><span class="street-address">Sarjapur Outer Ring Road</span></div>
+<div dir="auto" class="left">
+<span class="locality">Bangalore</span> <span class="postal-code">560103</span>
+</div>
+<div dir="auto" class="left"><span class="region">Karnataka</span></div>
+<div dir="auto" class="left"><span class="country-name">India</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:addogra@cisco.com" class="email">addogra@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Abin Abraham</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
+<div dir="auto" class="left"><span class="street-address">Sarjapur Outer Ring Road</span></div>
+<div dir="auto" class="left">
+<span class="locality">Bangalore</span> <span class="postal-code">560103</span>
+</div>
+<div dir="auto" class="left"><span class="region">Karnataka</span></div>
+<div dir="auto" class="left"><span class="country-name">India</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:abiabrah@cisco.com" class="email">abiabrah@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Seshan Krishnamurthy</span></div>
+<div dir="auto" class="left"><span class="org">AMD</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:seskrish@amd.com" class="email">seskrish@amd.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Alexandre Cassen</span></div>
+<div dir="auto" class="left"><span class="org">Free / keepalived.org</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:acassen@corp.free.fr" class="email">acassen@corp.free.fr</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>

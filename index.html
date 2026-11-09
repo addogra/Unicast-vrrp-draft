@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>addogra/Unicast-vrrp-draft main preview</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <style type="text/css">/*<![CDATA[*/
+      body { font-family: "Helvetica Neue","Open Sans", Helvetica, Calibri,sans-serif; }
+      h1, h2, td { font-family: "Helvetica Neue", "Roboto Condensed", "Open Sans", Helvetica, Calibri, sans-serif; }
+      h1 { font-size: 20px; } h2 { font-size: 16px; }
+      table { margin: 5px 10px; border-collapse: collapse; }
+      th, td { font-weight: normal; text-align: left; padding: 2px 5px; }
+      a:link { color: #000; } a:visited { color: #00a; }
+    /*]]>*/</style>
+  </head>
+  <body>
+    <h1>Editor's drafts for main branch of <a href="https://github.com/addogra/Unicast-vrrp-draft">addogra/Unicast-vrrp-draft</a></h1>
+    <p>View <a href="issues.html">saved issues</a>, or the latest GitHub <a href="https://github.com/addogra/Unicast-vrrp-draft/issues">issues</a> and <a href="https://github.com/addogra/Unicast-vrrp-draft/pulls">pull requests</a> in the <a href="https://github.com/addogra/Unicast-vrrp-draft">repo</a>.</p>
+    <table id="branch-main">
+      <tr>
+        <td><a href="./draft-abinabraham-vrrp-unicast.html" class="html draft-abinabraham-vrrp-unicast" title="Unicast Support for the Virtual Router Redundancy Protocol (VRRP) (HTML)">Unicast VRRP</a></td>
+        <td><a href="./draft-abinabraham-vrrp-unicast.txt" class="txt draft-abinabraham-vrrp-unicast" title="Unicast Support for the Virtual Router Redundancy Protocol (VRRP) (Text)">plain text</a></td>
+        <td><a href="https://datatracker.ietf.org/doc/draft-abinabraham-vrrp-unicast" class="dt draft-abinabraham-vrrp-unicast" title="Datatracker for draft-abinabraham-vrrp-unicast">datatracker</a></td>
+        <td><a href="https://author-tools.ietf.org/api/iddiff?doc_1=draft-abinabraham-vrrp-unicast&amp;url_2=https://addogra.github.io/Unicast-vrrp-draft/draft-abinabraham-vrrp-unicast.txt" class="diff draft-abinabraham-vrrp-unicast">diff with last submission</a></td>
+        <td></td>
+      </tr>
+    </table>
+    <script>
+window.onload = function() {
+  var referrer_branch = 'main';
+  // e.g., "https://github.com/user/repo/tree/main"
+  var chunks = document.referrer.split("/");
+  if (chunks[2] === 'github.com' && chunks[5] === 'tree') {
+    referrer_branch = chunks[6];
+  }
+  let branch = document.querySelector('#branch-' + referrer_branch);
+  let h = document.location.hash.substring(1);
+  if (h === 'show') {
+    document.location.hash = '#' + branch.id;
+  } else if (branch && h.startsWith('go')) {
+    let e = branch.querySelector(h.substring(2));
+    if (e && e.href) {
+      document.location = e.href;
+    }
+  }
+};
+    </script>
+  </body>
+</html>
