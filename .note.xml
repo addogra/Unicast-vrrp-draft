@@ -1,0 +1,7 @@
+<note title="Discussion Venues" removeInRFC="true">
+<t>Discussion of this document takes place on the
+    Virtual Router Redundancy Protocol Working Group mailing list (vrrp@ietf.org),
+    which is archived at <eref target="https://mailarchive.ietf.org/arch/browse/vrrp"/>.</t>
+<t>Source for this draft and an issue tracker can be found at
+    <eref target="https://github.com/addogra/Unicast-vrrp-draft"/>.</t>
+</note>
