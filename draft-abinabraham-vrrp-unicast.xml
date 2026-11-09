@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc [
+ <!ENTITY nbsp "&#160;">
+]>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude"
+    category="std"
+    consensus="true"
+    docName="draft-abinabraham-vrrp-unicast-latest"
+    ipr="trust200902"
+    submissionType="IETF"
+    sortRefs="true"
+    symRefs="true"
+    tocDepth="3"
+    tocInclude="true"
+    updates="9568"
+    version="3"
+    xml:lang="en">
+  <front>
+    <title abbrev="Unicast VRRP">Unicast Support for the Virtual Router Redundancy Protocol (VRRP)</title>
+    <seriesInfo name="Internet-Draft" value="draft-abinabraham-vrrp-unicast-latest"/>
+    <author initials="A." surname="Dogra" fullname="Aditya Dogra">
+      <organization>Cisco Systems</organization>
+      <address>
+        <postal>
+          <street>Sarjapur Outer Ring Road</street>
+          <city>Bangalore</city>
+          <region>Karnataka</region>
+          <code>560103</code>
+          <country>India</country>
+        </postal>
+        <email>addogra@cisco.com</email>
+      </address>
+    </author>
+    <author initials="A." surname="Abraham" fullname="Abin Abraham">
+      <organization>Cisco Systems</organization>
+      <address>
+        <postal>
+          <street>Sarjapur Outer Ring Road</street>
+          <city>Bangalore</city>
+          <region>Karnataka</region>
+          <code>560103</code>
+          <country>India</country>
+        </postal>
+        <email>abiabrah@cisco.com</email>
+      </address>
+    </author>
+    <author initials="S." surname="Krishnamurthy" fullname="Seshan Krishnamurthy">
+      <organization>AMD</organization>
+      <address>
+        <email>seskrish@amd.com</email>
+      </address>
+    </author>
+    <author initials="A." surname="Cassen" fullname="Alexandre Cassen">
+      <organization>Free / keepalived.org</organization>
+      <address>
+        <email>acassen@corp.free.fr</email>
+      </address>
+    </author>
+    <date/>
+    <area>Routing Area</area>
+    <workgroup>Routing Area Working Group</workgroup>
+    <keyword>VRRP</keyword>
+    <keyword>unicast</keyword>
+    <keyword>first-hop redundancy</keyword>
+
+    <abstract>
+      <t>
+        The Virtual Router Redundancy Protocol (VRRP) Version 3 as specified
+        in RFC 9568 assumes multicast operation on a shared LAN. Some
+        deployments require the VRRP first-hop redundancy function but cannot
+        use multicast delivery for VRRP advertisements. This document updates
+        RFC 9568 by defining an optional configured unicast mode for VRRP
+        Version 3 in which advertisements are sent to configured peer
+        addresses rather than to the VRRP multicast group. The VRRP packet
+        format, state machine, protocol number, virtual IP semantics, and
+        Virtual Router MAC behavior remain unchanged from RFC 9568.
+      </t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section anchor="intro">
+      <name>Introduction</name>
+      <t>
+        <xref target="RFC9568"/> specifies VRRP Version 3 for IPv4 and IPv6
+        and assumes multicast operation on a shared LAN. In a number of
+        deployments, redundant routers still need fast active/backup failover
+        for a virtual default gateway, but the environment does not provide
+        usable multicast support for VRRP advertisements.
+      </t>
+      <t>
+        The primary deployment driver is the continued need for the classic
+        VRRPv3 function of protecting a virtual IPv4 or IPv6 first-hop gateway
+        in environments where multicast delivery is unavailable or is not
+        used because of operational or security policy. This includes
+        multicast-capable multiaccess LANs on which operators choose
+        configured unicast, as well as virtualized, cloud, overlay, and other
+        networks that provide host-facing LAN semantics while delivering VRRP
+        control traffic through explicit single-hop peer connectivity.
+      </t>
+      <t>
+        Multiple implementations already support some form of unicast VRRP
+        advertisement delivery, including Cisco IOS XR, Keepalived, VyOS, and
+        Juniper Cloud-Native Router. This document provides a common
+        specification for the most conservative unicast extension: replace
+        multicast advertisement delivery with configured unicast peers while
+        preserving the rest of the VRRP protocol.
+      </t>
+      <t>
+        The intended use case for this document is not a generic active/backup
+        role-election mechanism. Rather, it is a narrow extension of VRRPv3 for
+        deployments that want to preserve the familiar VRRP state machine,
+        protocol number, virtual IP address semantics, Virtual Router MAC
+        behavior, and host-facing forwarding model while using a different
+        advertisement delivery mode.
+      </t>
+    </section>
+
+    <section anchor="req-lang">
+      <name>Requirements Language</name>
+      <t>
+        The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>",
+        "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>",
+        "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>",
+        "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>",
+        "<bcp14>NOT RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and
+        "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as
+        described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/>
+        when, and only when, they appear in all capitals, as shown here.
+      </t>
+    </section>
+
+    <section anchor="scope">
+      <name>Scope and Applicability</name>
+      <t>
+        This document updates <xref target="RFC9568"/> by defining an
+        optional configured unicast mode of operation for VRRPv3. Multicast
+        mode remains the default mode of operation. The unicast mode is
+        intended for deployments that still want the classic VRRP model of a
+        Virtual Router protecting one or more virtual IPv4 or IPv6 addresses,
+        but that either cannot rely on multicast delivery of advertisements or
+        intentionally do not use it because of operational or security policy.
+      </t>
+      <t>
+        The underlying connectivity remains a common multiaccess LAN, or a
+        logical LAN that provides equivalent service, for the protected hosts
+        and participating VRRP Routers. This document does not redefine VRRP
+        for a routed point-to-multipoint topology. The physical realization
+        can be Ethernet or a virtual or overlay network, but it
+        <bcp14>MUST</bcp14> preserve the host-facing behavior specified in
+        <xref target="RFC9568"/>, including delivery to the Virtual Router MAC
+        address and the applicable ARP or IPv6 Neighbor Discovery behavior. A
+        network that provides only routed unicast connectivity between VRRP
+        Routers and cannot provide these LAN semantics is outside the scope of
+        this specification.
+      </t>
+      <t>
+        Within this link model, the link either does not provide usable
+        multicast delivery for VRRP advertisements or provides multicast while
+        the operator chooses configured unicast because of operational or
+        security policy. In both cases, advertisements are exchanged directly
+        between configured peers on the same IP link.
+      </t>
+      <t>
+        The unicast mode defined here is limited to deployments in which the
+        participating VRRP Routers can exchange unicast packets whose IPv4 TTL
+        or IPv6 Hop Limit is 255 on receipt. This preserves the receive-side
+        validation model of
+        <xref target="RFC9568"/> and the GTSM <xref target="RFC5082"/>
+        protection against remote injection. In practice, this means the
+        VRRP Routers must be reachable without traversing any device that
+        decrements the TTL or Hop Limit.
+      </t>
+      <t>
+        This document does not define multi-hop operation. If a deployment
+        requires routed multi-hop active/backup election or transport
+        encapsulation other than IP protocol 112, that deployment is outside
+        the scope of this specification.
+      </t>
+      <t>
+        This document does not update VRRP Version 2.
+      </t>
+    </section>
+
+    <section anchor="definitions">
+      <name>Additional Definitions</name>
+      <dl newline="false" spacing="normal" indent="24">
+        <dt>Unicast Mode</dt>
+        <dd>
+          <t>
+            A mode of VRRP operation in which advertisements for a Virtual
+            Router are sent as unicast IPv4 or IPv6 packets to configured peer
+            addresses instead of to the VRRP multicast destination address.
+          </t>
+        </dd>
+        <dt>Unicast Peer</dt>
+        <dd>
+          <t>
+            A configured VRRP Router participating in the same Virtual Router
+            and address family whose address is used as a permitted source and
+            destination for unicast VRRP advertisements.
+          </t>
+        </dd>
+        <dt>Unicast Peer List</dt>
+        <dd>
+          <t>
+            The configured set of all other VRRP Routers that participate in a
+            unicast-mode Virtual Router for a given address family. This list
+            serves as both a destination list for transmission and an allow-list
+            for reception.
+          </t>
+        </dd>
+      </dl>
+    </section>
+
+    <section anchor="overview">
+      <name>Unicast VRRP Overview</name>
+      <t>
+        A Virtual Router defined by this document operates in exactly one of
+        two advertisement modes:
+      </t>
+      <ul spacing="normal">
+        <li>multicast mode, as specified in <xref target="RFC9568"/>, or</li>
+        <li>unicast mode, as specified in this document.</li>
+      </ul>
+      <t>
+        Multicast mode is the default mode. A VRRP Router
+        <bcp14>MUST</bcp14> use multicast mode unless unicast mode is
+        explicitly configured for the Virtual Router.
+      </t>
+      <t>
+        A VRRP Router operating a given Virtual Router in unicast mode
+        <bcp14>MUST NOT</bcp14> send VRRP advertisements for that Virtual
+        Router to the VRRP multicast destination address. Instead, it
+        <bcp14>MUST</bcp14> send a copy of each advertisement to each address
+        in the configured Unicast Peer List.
+      </t>
+      <t>
+        Except as updated by this document, the VRRP packet format, VRRP
+        state machine, timer calculations, preemption behavior, Priority 0
+        advertisements, Address Owner behavior, Accept_Mode, Virtual Router
+        semantics, virtual IP address behavior, and host-facing forwarding
+        behavior remain as specified in <xref target="RFC9568"/>.
+      </t>
+      <t>
+        Unicast mode is configured per Virtual Router.
+        A VRRP Router <bcp14>MUST NOT</bcp14> mix multicast mode and unicast
+        mode for the same Virtual Router instance.
+      </t>
+    </section>
+
+    <section anchor="peer-config">
+      <name>Peer Configuration</name>
+      <t>
+        A Virtual Router operating in unicast mode <bcp14>MUST</bcp14> be
+        configured with one or more Unicast Peers. A configuration that
+        enables unicast mode without at least one peer is invalid, and the
+        Virtual Router <bcp14>MUST NOT</bcp14> operate in unicast mode until
+        corrected.
+      </t>
+      <t>
+        Each VRRP Router participating in a unicast-mode Virtual Router
+        <bcp14>MUST</bcp14> be configured with the addresses of all other
+        participating VRRP Routers for that Virtual Router and address family.
+        Symmetric peer-list configuration is essential for correct protocol
+        operation, including Active/Backup election, preemption, and
+        advertisement-interval learning.
+      </t>
+      <t>
+        For IPv4 operation, each configured peer address <bcp14>MUST</bcp14>
+        be an IPv4 address that the peer uses as the source address
+        for VRRP advertisements, as described in
+        <xref target="ipv4-fields"/>. For IPv6 operation, each configured peer
+        address <bcp14>MUST</bcp14> be an IPv6 link-local address that the
+        peer uses as the source address for VRRP advertisements, as described
+        in <xref target="ipv6-fields"/>. For IPv6, the configured link-local
+        address must be reachable on the interface associated with the Virtual
+        Router.
+      </t>
+      <t>
+        The local router's own address <bcp14>MUST NOT</bcp14> appear in its
+        Unicast Peer List.
+      </t>
+      <t>
+        A conforming implementation <bcp14>MUST</bcp14> support at least one
+        configured Unicast Peer. Implementations <bcp14>SHOULD</bcp14>
+        support multiple peers for deployments with more than two VRRP Routers
+        in a Virtual Router group.
+      </t>
+    </section>
+
+    <section anchor="rfc9568-updates">
+      <name>Updates to RFC 9568</name>
+      <section anchor="overview-update">
+        <name>VRRP Overview</name>
+        <t>
+          The references to multicast-only operation in
+          <xref target="RFC9568" section="3" sectionFormat="of"/> are updated
+          to allow an advertisement to be delivered either to the VRRP
+          multicast destination address, as specified in
+          <xref target="RFC9568"/>, or to configured Unicast Peers, as
+          specified in this document.
+        </t>
+      </section>
+
+      <section anchor="protocol-update">
+        <name>Protocol Processing</name>
+        <t>
+          <xref target="RFC9568" section="5" sectionFormat="of"/> is updated
+          so that a Virtual Router operating in unicast mode sends and
+          receives VRRP advertisements only through the configured Unicast Peer
+          List for that Virtual Router and address family.
+        </t>
+      </section>
+
+      <section anchor="ipv4-fields">
+        <name>IPv4 Field Descriptions</name>
+        <t>
+          For a Virtual Router operating in unicast mode, the IPv4 field
+          descriptions in <xref target="RFC9568" section="5.1.1"
+          sectionFormat="of"/> are updated as follows:
+        </t>
+        <ol spacing="normal" type="1">
+          <li>
+            <t>
+              The IPv4 source address <bcp14>MUST</bcp14> be the primary IPv4
+              address of the sending interface, as specified in
+              <xref target="RFC9568"/>.
+            </t>
+          </li>
+          <li>
+            <t>
+              The IPv4 destination address <bcp14>MUST</bcp14> be the address
+              configured in the Unicast Peer List for the peer to which the
+              copy of the advertisement is being sent.
+            </t>
+          </li>
+          <li>
+            <t>
+              The IPv4 TTL <bcp14>MUST</bcp14> be set to 255, and a received
+              packet whose IPv4 TTL is not 255 <bcp14>MUST</bcp14> be
+              discarded.
+            </t>
+          </li>
+          <li>
+            <t>
+              The IPv4 Protocol field <bcp14>MUST</bcp14> remain 112.
+            </t>
+          </li>
+        </ol>
+      </section>
+
+      <section anchor="ipv6-fields">
+        <name>IPv6 Field Descriptions</name>
+        <t>
+          For a Virtual Router operating in unicast mode, the IPv6 field
+          descriptions in <xref target="RFC9568" section="5.1.2"
+          sectionFormat="of"/> are updated as follows:
+        </t>
+        <ol spacing="normal" type="1">
+          <li>
+            <t>
+              The IPv6 source address <bcp14>MUST</bcp14> be the link-local
+              address of the sending interface, as specified in
+              <xref target="RFC9568"/>.
+            </t>
+          </li>
+          <li>
+            <t>
+              The IPv6 destination address <bcp14>MUST</bcp14> be the
+              IPv6 link-local address configured in the Unicast Peer List for
+              the peer to which the copy of the advertisement is being sent.
+            </t>
+          </li>
+          <li>
+            <t>
+              The IPv6 Hop Limit <bcp14>MUST</bcp14> be set to 255, and a
+              received packet whose Hop Limit is not 255 <bcp14>MUST</bcp14>
+              be discarded.
+            </t>
+          </li>
+          <li>
+            <t>
+              The IPv6 Next Header field <bcp14>MUST</bcp14> remain 112.
+            </t>
+          </li>
+        </ol>
+      </section>
+
+      <section anchor="checksum-update">
+        <name>Checksum Computation</name>
+        <t>
+          Unicast mode does not define a new VRRP checksum algorithm. A VRRP
+          Router operating in unicast mode computes and verifies the checksum
+          as specified in <xref target="RFC9568" section="5.2.8"
+          sectionFormat="of"/>.
+        </t>
+      </section>
+
+      <section anchor="tx-update">
+        <name>Transmitting VRRP Packets</name>
+        <t>
+          <xref target="RFC9568" section="7.2" sectionFormat="of"/> is updated
+          so that a VRRP Router operating a Virtual Router in unicast mode
+          sends one copy of each VRRP advertisement to each configured Unicast
+          Peer instead of sending the advertisement to the VRRP multicast
+          group.
+        </t>
+        <t>
+          Other than the destination address (and, for IPv6, the resulting
+          checksum), the packet contents <bcp14>MUST</bcp14> be the same for
+          each transmitted copy.
+        </t>
+        <t>
+          The source MAC address <bcp14>MUST</bcp14> be the Virtual Router MAC
+          address as specified in <xref target="RFC9568" section="7.2"
+          sectionFormat="of"/>. This is unchanged from multicast mode.
+        </t>
+        <t>
+          Priority 0 advertisements (indicating that the Active Router is
+          relinquishing the active role) are sent to all configured Unicast
+          Peers, exactly as regular advertisements are sent.
+        </t>
+      </section>
+
+      <section anchor="rx-update">
+        <name>Receiving VRRP Packets</name>
+        <t>
+          A VRRP Router operating a Virtual Router in unicast mode
+          <bcp14>MUST</bcp14> process only advertisements whose source address
+          matches an address in the configured Unicast Peer List for that
+          Virtual Router and address family.
+        </t>
+        <t>
+          A received VRRP packet for a unicast-mode Virtual Router
+          <bcp14>MUST</bcp14> be discarded if:
+        </t>
+        <ul spacing="normal">
+          <li>the source address is not in the configured Unicast Peer List,</li>
+          <li>the IPv4 TTL or IPv6 Hop Limit is not 255,</li>
+          <li>the packet is received for the wrong address family, or</li>
+          <li>the packet is otherwise invalid according to <xref target="RFC9568"/>.</li>
+        </ul>
+        <t>
+          A VRRP Router operating a Virtual Router in unicast mode
+          <bcp14>MUST</bcp14> ignore VRRP advertisements for that same Virtual
+          Router received through multicast delivery (i.e., advertisements
+          whose destination address is the VRRP multicast group address).
+        </t>
+        <t>
+          A VRRP Router operating a Virtual Router in multicast mode
+          <bcp14>MUST</bcp14> ignore unicast-delivered VRRP advertisements for
+          that same Virtual Router.
+        </t>
+        <t>
+          These mode-isolation rules ensure that misconfigured peers
+          operating in different modes for the same VRID do not interfere
+          with each other's state machines.
+        </t>
+      </section>
+
+      <section anchor="state-machine-update">
+        <name>State Machine</name>
+        <t>
+          Unicast mode does not change the VRRP state machine defined in
+          <xref target="RFC9568" section="6" sectionFormat="of"/>. The states,
+          state transitions, timer calculations, preemption behavior, Priority
+          0 processing, Address Owner behavior, and Accept_Mode behavior remain
+          unchanged.
+        </t>
+        <t>
+          A Virtual Router operating in unicast mode applies the transmit and
+          receive rules in <xref target="tx-update"/> and
+          <xref target="rx-update"/> when the state machine sends or processes
+          VRRP advertisements.
+        </t>
+      </section>
+
+      <section anchor="host-facing-update">
+        <name>Host-Facing Behavior</name>
+        <t>
+          This document changes only advertisement delivery. The Active
+          Router's behavior with respect to the Virtual Router MAC address,
+          ARP, gratuitous ARP, IPv6 Neighbor Discovery, Router
+          Advertisements, Unsolicited Neighbor Advertisements, and forwarding
+          responsibility remains as specified in <xref target="RFC9568"/>.
+        </t>
+        <t>
+          In particular, unicast mode does not change the Virtual Router MAC
+          address. The Virtual Router MAC remains the well-known unicast VRRP
+          MAC associated with the VRID (00-00-5E-00-01-{VRID} for IPv4 and
+          00-00-5E-00-02-{VRID} for IPv6), as specified in
+          <xref target="RFC9568"/>.
+        </t>
+        <t>
+          Accept_Mode and Address Owner behavior are unchanged. An Address
+          Owner (Priority 255) immediately transitions to Active state and
+          sends advertisements to all configured Unicast Peers.
+        </t>
+      </section>
+    </section>
+
+    <section anchor="error-handling">
+      <name>Misconfiguration Detection and Error Handling</name>
+      <t>
+        Unicast mode relies on correct and symmetric peer-list configuration.
+        Unlike multicast mode, where any router on the segment can hear all
+        advertisements, unicast mode creates bilateral reachability
+        dependencies. This section specifies error handling for common
+        misconfiguration scenarios.
+      </t>
+      <section anchor="error-source">
+        <name>Source Validation Failures</name>
+        <t>
+          Implementations <bcp14>MUST</bcp14> maintain a counter of VRRP
+          advertisements discarded because the source address was not in the
+          configured Unicast Peer List for the relevant Virtual Router and
+          address family.
+        </t>
+        <t>
+          Implementations <bcp14>SHOULD</bcp14> log the first occurrence
+          (subject to rate-limiting) of a source validation failure for a
+          given Virtual Router, including the unexpected source address, the
+          VRID, and the interface.
+        </t>
+      </section>
+      <section anchor="error-mismatch">
+        <name>Mode Mismatch</name>
+        <t>
+          A mode mismatch occurs when some routers for a given VRID are
+          operating in unicast mode while others are in multicast mode. This
+          can result in a dual-Active condition because routers in different
+          modes will not hear each other's advertisements.
+        </t>
+        <t>
+          Implementations <bcp14>SHOULD</bcp14> log a warning if the Virtual
+          Router is in unicast mode and a VRRP multicast advertisement for the
+          same VRID is received on the same interface (indicating a likely
+          mode mismatch in the network).
+        </t>
+      </section>
+      <section anchor="error-silent">
+        <name>Silent Peer Failure</name>
+        <t>
+          When a Backup Router's Active_Down_Timer fires and no advertisements
+          were received from any configured peer during the timer period, this
+          <bcp14>MAY</bcp14> indicate either Active Router failure (the
+          correct failover case) or a connectivity or configuration problem.
+        </t>
+        <t>
+          Implementations <bcp14>SHOULD</bcp14> provide per-peer operational
+          state showing the last-received advertisement timestamp for each
+          configured Unicast Peer. This assists operators in distinguishing
+          between Active Router failure and reachability/configuration issues.
+        </t>
+      </section>
+      <section anchor="error-asymmetric">
+        <name>Asymmetric Peer Lists</name>
+        <t>
+          If Router A has Router B in its Unicast Peer List but Router B does
+          not have Router A in its peer list, then Router A's advertisements
+          will be discarded by Router B. This can cause Router B to
+          independently transition to Active, resulting in a dual-Active
+          condition.
+        </t>
+        <t>
+          This specification does not define an in-band mechanism to detect
+          or correct asymmetric peer configuration. Operators
+          <bcp14>MUST</bcp14> ensure symmetric peer-list configuration across
+          all routers participating in a unicast-mode Virtual Router.
+          Management-plane tools (YANG model, configuration audit) are the
+          intended mechanism for verifying symmetry.
+        </t>
+      </section>
+    </section>
+
+    <section anchor="operational">
+      <name>Operational Considerations</name>
+      <t>
+        A deployment using unicast mode <bcp14>SHOULD</bcp14> ensure that all
+        routers in a given Virtual Router are configured with a consistent
+        peer inventory. Inconsistent peer lists can create asymmetric
+        reachability and can lead to multiple routers independently deciding
+        that the Active Router has failed.
+      </t>
+      <t>
+        A deployment using unicast mode <bcp14>SHOULD</bcp14> continue to use
+        distinct priority values as recommended in <xref target="RFC9568"/> so
+        that Backup Routers do not transition to Active state simultaneously
+        after a failure.
+      </t>
+      <section anchor="op-yang">
+        <name>YANG Considerations</name>
+        <t>
+          This document does not define a YANG module. The VRRP YANG data model
+          is currently being revised by
+          <xref target="I-D.ietf-rtgwg-vrrp-rfc8347bis"/>, which is intended
+          to obsolete <xref target="RFC8347"/>. Deferring the unicast VRRP
+          YANG augmentation until that work is approved or published allows the
+          augmentation to be based on the stable successor to
+          <xref target="RFC8347"/>, avoids unnecessary churn against a moving
+          base model, and helps ensure alignment with the final VRRP YANG
+          schema.
+        </t>
+        <t>
+          A future revision of this document, or a companion YANG document, is
+          expected to define the management model for configuring the VRRP
+          advertisement mode, the unicast peer list, and related operational
+          state after <xref target="I-D.ietf-rtgwg-vrrp-rfc8347bis"/> has been
+          approved or published as an RFC.
+        </t>
+      </section>
+    </section>
+
+    <section anchor="security">
+      <name>Security Considerations</name>
+      <t>
+        The security considerations of <xref target="RFC9568"/> continue to
+        apply. In particular, VRRP still provides no confidentiality and does
+        not include cryptographic authentication of VRRP advertisements.
+      </t>
+      <section anchor="sec-gtsm">
+        <name>TTL/Hop Limit Protection</name>
+        <t>
+          This document preserves the requirement that the IPv4 TTL or IPv6
+          Hop Limit be 255 on transmitted and accepted packets.  The
+          protection against packets arriving from a remote network described
+          in <xref target="RFC5082"/> therefore continues to apply. An
+          attacker must be on the same link (or logical link) as the VRRP
+          Routers to inject or forge VRRP advertisements.
+        </t>
+      </section>
+      <section anchor="sec-recommendations">
+        <name>Security Recommendations</name>
+        <t>
+          Deployments using unicast VRRP in environments with untrusted
+          on-link neighbors <bcp14>SHOULD</bcp14> protect VRRP advertisement
+          exchange using link-layer security (e.g., IEEE 802.1AE MACsec) or
+          network-layer security (e.g., IPsec transport mode).
+        </t>
+        <t>
+          A future specification for multi-hop unicast operation would need a
+          fundamentally different security model and is outside the scope of
+          this document.
+        </t>
+      </section>
+    </section>
+
+    <section anchor="impl-status">
+      <name>Implementation Status</name>
+      <t>
+        [RFC Editor: This section is to be removed before publication.]
+      </t>
+      <t>
+        This section records the status of known implementations of the
+        protocol behavior described in this specification at the time of
+        posting, per <xref target="RFC7942"/>.
+      </t>
+      <t>
+        Known implementations or products that support unicast VRRP include
+        Cisco IOS XR, Keepalived, VyOS, and Juniper Cloud-Native Router.
+      </t>
+    </section>
+
+    <section anchor="iana">
+      <name>IANA Considerations</name>
+      <t>
+        This document requests no IANA actions.
+      </t>
+    </section>
+
+    <section anchor="ack">
+      <name>Acknowledgements</name>
+      <t>
+        The authors thank Acee Lindem for his work on RFC 9568 and
+        draft-ietf-rtgwg-vrrp-rfc8347bis, which provide the foundation for
+        this extension, and for comments that clarified the underlying link
+        model during the presentation at IETF 126.
+      </t>
+      <t>
+        The longstanding contributions of the Keepalived community to unicast
+        VRRP are gratefully acknowledged. In particular, the work of Alexandre
+        Cassen and Quentin Armitage in developing and maintaining Keepalived, a
+        mature open-source implementation with support for unicast VRRP, has
+        provided valuable implementation experience for this specification.
+      </t>
+    </section>
+
+  </middle>
+
+  <back>
+    <references>
+      <name>Normative References</name>
+        <reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119">
+          <front>
+            <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+            <author initials="S." surname="Bradner" fullname="Scott Bradner">
+              <organization/>
+            </author>
+            <date month="March" year="1997"/>
+          </front>
+          <seriesInfo name="BCP" value="14"/>
+          <seriesInfo name="RFC" value="2119"/>
+          <seriesInfo name="DOI" value="10.17487/RFC2119"/>
+        </reference>
+
+        <reference anchor="RFC8174" target="https://www.rfc-editor.org/info/rfc8174">
+          <front>
+            <title>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</title>
+            <author initials="B." surname="Leiba" fullname="Barry Leiba">
+              <organization/>
+            </author>
+            <date month="May" year="2017"/>
+          </front>
+          <seriesInfo name="BCP" value="14"/>
+          <seriesInfo name="RFC" value="8174"/>
+          <seriesInfo name="DOI" value="10.17487/RFC8174"/>
+        </reference>
+
+        <reference anchor="RFC9568" target="https://www.rfc-editor.org/info/rfc9568">
+          <front>
+            <title>Virtual Router Redundancy Protocol (VRRP) Version 3 for IPv4 and IPv6</title>
+            <author initials="A." surname="Lindem" fullname="Acee Lindem">
+              <organization/>
+            </author>
+            <author initials="A." surname="Dogra" fullname="Aditya Dogra">
+              <organization/>
+            </author>
+            <date month="April" year="2024"/>
+          </front>
+          <seriesInfo name="RFC" value="9568"/>
+          <seriesInfo name="DOI" value="10.17487/RFC9568"/>
+        </reference>
+    </references>
+
+    <references>
+      <name>Informative References</name>
+        <reference anchor="RFC5082" target="https://www.rfc-editor.org/info/rfc5082">
+          <front>
+            <title>The Generalized TTL Security Mechanism (GTSM)</title>
+            <author initials="V." surname="Gill" fullname="Vijay Gill">
+              <organization/>
+            </author>
+            <author initials="J." surname="Heasley" fullname="Jeffrey Heasley">
+              <organization/>
+            </author>
+            <author initials="D." surname="Meyer" fullname="David Meyer">
+              <organization/>
+            </author>
+            <date month="October" year="2007"/>
+          </front>
+          <seriesInfo name="RFC" value="5082"/>
+          <seriesInfo name="DOI" value="10.17487/RFC5082"/>
+        </reference>
+
+        <reference anchor="RFC7942" target="https://www.rfc-editor.org/info/rfc7942">
+          <front>
+            <title>Improving Awareness of Running Code: The Implementation Status Section</title>
+            <author initials="Y." surname="Sheffer" fullname="Yaron Sheffer">
+              <organization/>
+            </author>
+            <author initials="A." surname="Farrel" fullname="Adrian Farrel">
+              <organization/>
+            </author>
+            <date month="July" year="2016"/>
+          </front>
+          <seriesInfo name="BCP" value="205"/>
+          <seriesInfo name="RFC" value="7942"/>
+          <seriesInfo name="DOI" value="10.17487/RFC7942"/>
+        </reference>
+
+        <reference anchor="RFC8347" target="https://www.rfc-editor.org/info/rfc8347">
+          <front>
+            <title>A YANG Data Model for the Virtual Router Redundancy Protocol (VRRP)</title>
+            <author initials="X." surname="Liu" fullname="Xufeng Liu" role="editor">
+              <organization/>
+            </author>
+            <author initials="A." surname="Kyparlis" fullname="Athanasios Kyparlis">
+              <organization/>
+            </author>
+            <author initials="R." surname="Parikh" fullname="Ravi Parikh">
+              <organization/>
+            </author>
+            <author initials="A." surname="Lindem" fullname="Acee Lindem">
+              <organization/>
+            </author>
+            <author initials="M." surname="Zhang" fullname="Mingui Zhang">
+              <organization/>
+            </author>
+            <date month="March" year="2018"/>
+          </front>
+          <seriesInfo name="RFC" value="8347"/>
+          <seriesInfo name="DOI" value="10.17487/RFC8347"/>
+        </reference>
+
+        <reference anchor="I-D.ietf-rtgwg-vrrp-rfc8347bis" target="https://datatracker.ietf.org/doc/draft-ietf-rtgwg-vrrp-rfc8347bis/">
+          <front>
+            <title>A YANG Data Model for the Virtual Router Redundancy Protocol (VRRP)</title>
+            <author initials="A." surname="Lindem" fullname="Acee Lindem">
+              <organization/>
+            </author>
+            <date day="13" month="February" year="2026"/>
+          </front>
+          <seriesInfo name="Internet-Draft" value="draft-ietf-rtgwg-vrrp-rfc8347bis-15"/>
+        </reference>
+    </references>
+  </back>
+</rfc>
