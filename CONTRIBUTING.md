@@ -38,3 +38,15 @@ Here are two ways to create a pull request ("PR"):
 
 Document authors/editors are often happy to accept contributions of text,
 and might be willing to help you through the process. Email them and ask.
+
+## Review and submission policy
+
+- Make each draft-source change through a pull request.
+- Resolve all review conversations and make sure that the draft build passes.
+- Get approval from a document author and one additional reviewer.
+- Treat GitHub review as input to the IETF process. It does not replace
+  working-group mailing-list discussion or consensus.
+- Merge an approved pull request before you prepare a numbered revision.
+- Submit a revision only through the protected `ietf-submission` environment.
+  An author must approve that environment before the workflow uploads the
+  revision to the IETF Datatracker.
